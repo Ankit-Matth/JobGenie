@@ -47,7 +47,12 @@ const scrapeLinkedIn = async (query) => {
     },
   ];
 
-  return data;
+  // Simulate a 2-second delay before returning the data
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(data);
+    }, 2000);
+  });
 };
 
 const scrapeNaukri = async (query) => {
@@ -98,7 +103,12 @@ const scrapeNaukri = async (query) => {
     ];
     
     // await browser.close();
-    return data;
+  // Simulate a 2-second delay before returning the data
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(data);
+    }, 2000);
+  });
 };
 
 const scrapeInternshala = async (query) => {
@@ -149,7 +159,12 @@ const scrapeInternshala = async (query) => {
     ];
     
     // await browser.close();
-    return data;
+  // Simulate a 2-second delay before returning the data
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(data);
+    }, 2000);
+  });
 };
 
 export async function POST(request) {
