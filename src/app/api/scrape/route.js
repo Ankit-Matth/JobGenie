@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
 // import connectDB from '@/utils/dbConfig';
 // import JobsModel from '@/models/JobListings';
 
@@ -51,12 +51,12 @@ const scrapeLinkedIn = async (query) => {
 };
 
 const scrapeNaukri = async (query) => {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-    const page = await browser.newPage();
-    await page.goto(`https://www.naukri.com/${query}-jobs?k=${query}&nignbevent_src=jobsearchDeskGNB`);
+    // const browser = await puppeteer.launch({
+    //   headless: true,
+    //   args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // });
+    // const page = await browser.newPage();
+    // await page.goto(`https://www.naukri.com/${query}-jobs?k=${query}&nignbevent_src=jobsearchDeskGNB`);
   
     const data = [
       {
@@ -97,17 +97,17 @@ const scrapeNaukri = async (query) => {
       },
     ];
     
-    await browser.close();
+    // await browser.close();
     return data;
 };
 
 const scrapeInternshala = async (query) => {
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-    const page = await browser.newPage();
-    await page.goto(`https://internshala.com/jobs/keywords-${query}/`);
+    // const browser = await puppeteer.launch({
+    //   headless: true,
+    //   args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // });
+    // const page = await browser.newPage();
+    // await page.goto(`https://internshala.com/jobs/keywords-${query}/`);
 
     const data = [
       {
@@ -148,7 +148,7 @@ const scrapeInternshala = async (query) => {
       },
     ];
     
-    await browser.close();
+    // await browser.close();
     return data;
 };
 
