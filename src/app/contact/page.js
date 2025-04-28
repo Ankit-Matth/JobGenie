@@ -52,7 +52,7 @@ const Page = () => {
               onClick={onClose}
               aria-label="Close modal"
             >
-              &times; {/* Close icon */}
+              &times;
             </button>
             <h2 className="text-2xl font-semibold mb-4">Thank You!</h2>
             <p className="text-gray-700 text-lg mb-8">
@@ -150,7 +150,7 @@ const Page = () => {
             </div>
             <div className="w-full md:w-2/5">
               <Image
-                src="/images/contact.jpg" // Replace with your actual image path
+                src="/images/contact.jpg"
                 alt="Contact Us"
                 width={400}
                 height={300}
@@ -159,18 +159,30 @@ const Page = () => {
             </div>
           </div>
 
-          {/* Enhanced Address Section */}
-          <div className="mt-12 text-center bg-gray-100 p-8 rounded-lg shadow-md">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2">The Job Genie Office</h3>
-            <p className="text-lg text-gray-700">Sector 63, D-44</p>
-            <p className="text-lg text-gray-700">Noida, Uttar Pradesh 201301</p>
-            <p className="text-lg text-gray-700">Phone: (0120) 123-4567</p>
-            <p className="text-lg text-gray-700 mb-2">
-              Email: <a href="mailto:jobgenie@gmail.com" className="text-blue-500">jobgenie@gmail.com</a>
-            </p>
-            <p className="text-sm text-gray-600 italic">
-              Your trusted partner in job placements and recruitment.
-            </p>
+          <div className="mt-12 text-center bg-gray-100 p-8 rounded-lg shadow-md flex flex-col md:flex-row items-center justify-between">
+            <div className="w-full md:w-2/5">
+              <Image
+                src="/images/JobGenie.png"
+                alt="Contact Us"
+                width={400}
+                height={300}
+                className="object-cover"
+              />
+            </div>
+            <div className="w-full md:w-3/5 text-left">
+            <div className="md:ml-24">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2">Our Office</h3>
+              <p className="text-gray-700">Sector XYZ, Plot No. 123</p>
+              <p className="text-gray-700">Bhiwani, Haryana, 127029</p>
+              <p className="text-gray-700">Phone: (0000) 00000-00000</p>
+              <p className="text-gray-700 mb-1">
+                Email: <a href="mailto:contact@jobgenie.com" className="text-blue-500">contact@jobgenie.com</a>
+              </p>
+              <p className="text-gray-800">
+                Your trusted partner in job placements and recruitment.
+              </p>
+            </div>
+            </div>
           </div>
         </div>
       </div>

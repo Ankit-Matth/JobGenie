@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer';
 // import connectDB from '@/utils/dbConfig';
 // import JobsModel from '@/models/JobListings';
 
-const scrapeLinkedIn = async (query) => {
-   // LinkedIn asks for sign-in to search, so it was skipped
-   // due to lack of time to handle it. I plan to address it in the upcoming semester.
-   // So, for now dummy data sent .....
+const scrapeIndeed = async (query) => {
 
    const data = [
     {
@@ -14,45 +11,44 @@ const scrapeLinkedIn = async (query) => {
       title: "Frontend Developer",
       company: "HCLSoftware",
       location: "Noida, Uttar Pradesh",
-      platform: "LinkedIn",
+      platform: "Indeed",
       salary: "$70,000 - $90,000",
       salaryRange: "50k-100k",
       skills: ["React", "JavaScript", "CSS"],
       jobType: "Internship",
-      src: "https://www.linkedin.com/jobs/search/?currentJobId=4068024492&keywords=nextjs&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true",
+      src: "https://www.Indeed.com/jobs/search/?currentJobId=4068024492&keywords=nextjs&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true",
     },
     {
       id: 2,
       title: "Full Stack Developer",
       company: "TCS",
       location: "Bengaluru, Karnataka",
-      platform: "LinkedIn",
+      platform: "Indeed",
       salary: "$105,000 - $110,000",
       salaryRange: "> 100k",
       skills: ["Node.js", "React", "MongoDB"],
       jobType: "Full-Time",
-      src: "https://www.linkedin.com/jobs/search/?currentJobId=4072024592&keywords=fullstack&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true",
+      src: "https://www.Indeed.com/jobs/search/?currentJobId=4072024592&keywords=fullstack&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true",
     },
     {
       id: 3,
       title: "UI/UX Designer",
       company: "Infosys",
       location: "Mumbai",
-      platform: "LinkedIn",
+      platform: "Indeed",
       salary: "$60,000 - $80,000",
       salaryRange: "50k-100k",
       skills: ["Figma", "Adobe XD", "CSS"],
       jobType: "Contract",
-      src: "https://www.linkedin.com/jobs/search/?currentJobId=4073124693&keywords=designer&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true",
+      src: "https://www.Indeed.com/jobs/search/?currentJobId=4073124693&keywords=designer&origin=JOBS_HOME_SEARCH_BUTTON&refresh=true",
     },
   ];
 
-  // Simulate a 2-second delay before returning the data
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
-    }, 2000);
-  });
+    }, 6000);
+  })
 };
 
 const scrapeNaukri = async (query) => {
@@ -103,12 +99,11 @@ const scrapeNaukri = async (query) => {
     ];
     
     // await browser.close();
-  // Simulate a 2-second delay before returning the data
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(data);
-    }, 2000);
-  });
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+      }, 6000);
+    })
 };
 
 const scrapeInternshala = async (query) => {
@@ -159,12 +154,11 @@ const scrapeInternshala = async (query) => {
     ];
     
     // await browser.close();
-  // Simulate a 2-second delay before returning the data
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(data);
-    }, 2000);
-  });
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+      }, 6000);
+    })
 };
 
 export async function POST(request) {
@@ -173,14 +167,14 @@ export async function POST(request) {
 //   await connectDB();
   
   try {
-    const [linkedinJobs, naukriJobs, internshalaJobs] = await Promise.all([
-      scrapeLinkedIn(query),
+    const [indeedJobs, naukriJobs, internshalaJobs] = await Promise.all([
+      scrapeIndeed(query),
       scrapeNaukri(query),
       scrapeInternshala(query),
     ]);
     
     // Combine the results
-    const allJobs = [...linkedinJobs, ...naukriJobs, ...internshalaJobs];
+    const allJobs = [...indeedJobs, ...naukriJobs, ...internshalaJobs];
 
     // await JobsModel.insertMany(allJobs);
 

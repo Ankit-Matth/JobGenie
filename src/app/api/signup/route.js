@@ -9,7 +9,6 @@ export async function POST(request) {
         
         await connectDB();
 
-        // Check if the user already exists
         const existingUser = await UserModel.findOne({ email });
         if (existingUser) {
             return NextResponse.json(
@@ -18,10 +17,8 @@ export async function POST(request) {
             );
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        // Create a new user
         const newUser = new UserModel({
             fullName: name,
             email,

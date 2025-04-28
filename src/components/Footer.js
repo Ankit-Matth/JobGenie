@@ -6,23 +6,20 @@ const Footer = () => {
   const [modalContent, setModalContent] = useState('');
   const [shake, setShake] = useState(false);
 
-  // Function to open modal with specified content
   const openModal = (content) => {
     setModalContent(content);
     setIsModalOpen(true);
   };
 
-  // Function to close modal
   const closeModal = () => {
     setIsModalOpen(false);
     setModalContent('');
     setShake(false);
   };
 
-  // Function to trigger shake animation
   const handleOverlayClick = () => {
     setShake(true);
-    setTimeout(() => setShake(false), 500); // Remove shake class after animation ends
+    setTimeout(() => setShake(false), 500);
   };
 
   // Content for Terms of Service and Privacy Policy
@@ -31,13 +28,13 @@ const Footer = () => {
       <>
         <h2 className="text-xl font-semibold mb-4">Terms of Service</h2>
         <ul className="list-disc pl-5 space-y-2 text-gray-700 text-sm">
-          <li>These terms govern the use of &quot;The Job Genie&quot; platform.</li>
+          <li>These terms govern the use of &quot;Job Genie&quot; platform.</li>
           <li>
             Users are expected to provide accurate information and use the platform for lawful
             purposes.
           </li>
           <li>
-            &quot;The Job Genie&quot; aggregates job listings but is not responsible for third-party
+            &quot;Job Genie&quot; aggregates job listings but is not responsible for third-party
             inaccuracies or hiring outcomes.
           </li>
           <li>
@@ -80,7 +77,7 @@ const Footer = () => {
       <footer className="bg-gray-900 text-white py-4">
         <div className="flex justify-between items-center px-4">
           <p className="text-sm">
-            Copyright &copy; The Job Genie {new Date().getFullYear()} - All Rights Reserved.
+            Copyright &copy; Job Genie {new Date().getFullYear()} - All Rights Reserved.
           </p>
           <div className="flex space-x-4">
             <button

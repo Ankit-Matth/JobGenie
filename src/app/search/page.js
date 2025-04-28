@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const platforms = ["All", "LinkedIn", "Naukri", "Internshala"];
+const platforms = ["All", "Indeed", "Naukri", "Internshala"];
 
 const filters = {
   location: ["Remote", "Bengaluru", "Mumbai", "Noida", "Hyderabad"],
@@ -11,7 +11,7 @@ const filters = {
 };
 
 const SearchPage = () => {
-  const hasFetched = useRef(false); // Ref to track if fetch has run
+  const hasFetched = useRef(false);
   const [selectedPlatform, setSelectedPlatform] = useState("All");
   const [filtersState, setFiltersState] = useState({
     location: "",
@@ -22,9 +22,9 @@ const SearchPage = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
 
-  const [loading, setLoading] = useState(true); // State to control loading
-  const [loadingStep, setLoadingStep] = useState(0); // Current step
-  const [progress, setProgress] = useState(0); // Progress percentage
+  const [loading, setLoading] = useState(true); 
+  const [loadingStep, setLoadingStep] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
@@ -35,14 +35,14 @@ const SearchPage = () => {
   const [next, setNext] = useState(6);
 
   const steps = [
-    "Scraping data from LinkedIn",
+    "Scraping data from Indeed",
     "Scraping data from Naukri.com",
     "Scraping data from Internshala",
     "Analysing & processing all data",
   ];
 
   useEffect(() => {
-    if (hasFetched.current) return; // Skip fetch if already run
+    if (hasFetched.current) return;
     hasFetched.current = true;
 
     fetch('/api/scrape', {
@@ -126,13 +126,13 @@ useEffect(() => {
       setTimeout(() => {
         setLoadingStep((prev) => prev + 1);
         setProgress(0);
-        startTime = null; // Reset start time for next step
-      }, 1000); // Delay to allow the progress bar to finish
+        startTime = null;
+      }, 1000);
     }
   };
 
   if (loadingStep < steps.length) {
-    rafId = requestAnimationFrame(animateProgress); // Start the animation
+    rafId = requestAnimationFrame(animateProgress);
   }
 
   return () => {
@@ -176,7 +176,7 @@ useEffect(() => {
                       : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                   }`}
                   onClick={() => setSelectedPlatform(platform)}
-                  disabled={loading} // Disable buttons during loading
+                  disabled={loading}
                 >
                   {platform}
                 </button>
@@ -274,7 +274,6 @@ useEffect(() => {
                 </ul>
               </div>
               
-              {/* Button with Job Source Link */}
               <a 
                 href={job.src} 
                 target="_blank" 

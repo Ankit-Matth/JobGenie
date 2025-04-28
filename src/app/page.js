@@ -9,7 +9,7 @@ export default function Home() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [placeholderTextError, setPlaceholderTextError] = useState(false);
+  const [searchError, setSearchError] = useState(false);
 
   useEffect(() => {
     getSession().then(session => {
@@ -23,13 +23,17 @@ export default function Home() {
       if (isLoggedIn) {
         router.push(`/search?query=${searchQuery}`);
       } else {
-        router.push('/login');
+        setSearchError(true);
+        setSearchQuery('Please log in to your account before searching...');
+        setTimeout(() => {
+          router.push('/login');
+        }, 2500);
       }
     } else {
-      setPlaceholderTextError(true)
+      setSearchError(true)
       setTimeout(() => {
-        setPlaceholderTextError(false)
-      }, 1200);
+        setSearchError(false)
+      }, 2000);
     }
   };
 
@@ -40,7 +44,7 @@ export default function Home() {
             Discover Your Dream Job Effortlessly!
           </h1>
           <p className="mt-2 text-2xl text-gray-600 max-w-2xl text-center my-3">
-            Streamline your job search across top platforms like LinkedIn, Naukri, and Internshala—all from one place.
+            Streamline your job search across top platforms like Indeed, Naukri, and Internshala—all from one place.
           </p>
 
           <div className="relative w-full max-w-lg mb-8 mt-8">
@@ -48,8 +52,8 @@ export default function Home() {
               type="text"
               onChange={(e)=>{setSearchQuery(e.target.value)}}
               value={searchQuery}
-              className={`w-full p-4 rounded-md focus:outline-blue-600 ring-2 ${placeholderTextError ? 'ring-red-700 placeholder-red-600' : 'ring-blue-300 placeholder-gray-400'}`}
-              placeholder={placeholderTextError ? "Please type something in the search box..." : "Search for jobs, companies, or keywords..."}
+              className={`w-full p-4 rounded-md focus:outline-blue-600 ring-2 ${searchError ? 'ring-red-700 placeholder-red-600' : 'ring-blue-300 placeholder-gray-400'}`}
+              placeholder={searchError ? "Please type something in the search box..." : "Search for jobs, companies, or keywords..."}
             />
             <button onClick={handleSearch} className="absolute right-0 top-0 h-full px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
               Search
@@ -68,7 +72,7 @@ export default function Home() {
           />
           <h2 className="text-xl font-semibold mb-2">Unified Job Search</h2>
           <p className="text-gray-700">
-            Search for jobs across LinkedIn, Naukri, and Internshala, all in one go. No more endless searching!
+            Search jobs across top platforms like Indeed, Naukri, and Internshala - all from one place.
           </p>
         </div>
 
@@ -82,7 +86,7 @@ export default function Home() {
           />
           <h2 className="text-xl font-semibold mb-2">Personalized Job Alerts</h2>
           <p className="text-gray-700">
-            Receive notifications directly to your email when jobs from your dream companies are posted.
+           Receive notifications directly to your email whenever your dream job is posted anywhere.
           </p>
         </div>
 
@@ -96,21 +100,25 @@ export default function Home() {
           />
           <h2 className="text-xl font-semibold mb-2">Advanced Job Listings</h2>
           <p className="text-gray-700">
-            Get the most relevant job listings tailored to your skills and interests with ease.
+            Get the most relevant job listings tailored to your skills and interests at one place.
           </p>
         </div>
       </div>
 
-      <div className="text-center my-10">
+      <div className="text-center my-12">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">
           The Job You Want, Delivered to Your Inbox
         </h2>
         <p className="text-lg text-gray-600 mb-4">
           Build the Career You Deserve – Get Job Alerts on Your Terms
         </p>
-        <button onClick={()=>{router.push('/login')}} className="py-2 px-4 bg-yellow-500 text-white rounded-md hover:bg-yellow-400 transition duration-300">
-          Sign Up Now for Personalized Job Alerts
+        <button
+          onClick={() => router.push(isLoggedIn ? '/dashboard' : '/login')}
+          className="py-2 px-4 bg-yellow-500 text-white rounded-md hover:bg-yellow-400 transition duration-300"
+        >
+          {isLoggedIn ? 'Set Preferences for Job Alerts' : 'Sign Up Now for Personalized Job Alerts'}
         </button>
+
       </div>
     </div>
   );

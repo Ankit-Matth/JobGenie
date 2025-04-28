@@ -27,17 +27,17 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="py-5 shadow-md mb-[2px]">
+    <header className="py-3 shadow-md mb-[2px]">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" onClick={() => handleLinkClick("/")}>
+        <Link href="/" onClick={() => handleLinkClick("/")} className="flex items-center space-x-2 ml-4 md:ml-0">
           <Image
-            src="/images/logo.png"
+            src="/images/Genie.svg"
             priority={true}
             alt="Logo"
-            width={250}
-            height={100}
-            className="w-56 md:w-100"
+            width={40}
+            height={40}
           />
+          <span className="text-3xl font-semibold text-gray-600">JOB GENIE</span>
         </Link>
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="border-black border px-1 rounded">

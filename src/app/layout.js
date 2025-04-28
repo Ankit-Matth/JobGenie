@@ -4,7 +4,7 @@ import AuthProvider from "./AuthProvider";
 import { auth } from "../auth"
 
 export const metadata = {
-  title: "The Job Genie",
+  title: "Job Genie",
   description: "A team project",
 };
 

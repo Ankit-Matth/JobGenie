@@ -8,7 +8,6 @@ export async function POST(request) {
         
         await connectDB();
 
-        // Create a new user
         const newContact = new ContactModel({
             fullName,
             email,

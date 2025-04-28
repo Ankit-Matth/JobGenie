@@ -4,10 +4,8 @@ import JobsModel from '@/models/JobListings';
 
 export async function GET(request) {
   try {
-    // Connect to the MongoDB database
     await connectDB();
 
-    // Fetch all job listings from MongoDB
     const allJobs = await JobsModel.find();
 
     if (!allJobs || allJobs.length === 0) {
@@ -17,7 +15,6 @@ export async function GET(request) {
       );
     }
 
-    // Return the list of all jobs as a JSON response
     return NextResponse.json(
       { success: true, jobs: allJobs },
       { status: 200 }

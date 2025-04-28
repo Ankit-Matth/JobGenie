@@ -25,7 +25,6 @@ const Dashboard = () => {
           Welcome, {session.user.fullName}!
         </h1>
         <div className="space-y-6">
-          {/* User Details */}
           <div className="flex justify-between items-center bg-gray-50 py-4 px-6 rounded-lg shadow-sm">
             <span className="font-medium text-gray-500">Full Name:</span>
             <span className="font-semibold text-gray-800">{session.user.fullName}</span>
@@ -43,7 +42,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        {/* Sign Out Button */}
         <div className="flex justify-center">
           <button
             onClick={handleSignOut}
