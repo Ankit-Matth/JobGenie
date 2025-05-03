@@ -18,8 +18,8 @@ export default function Home() {
   }, []);
 
   const handleSearch = (e) => {
+    e.preventDefault();
     if (searchQuery) {
-      e.preventDefault();
       if (isLoggedIn) {
         router.push(`/search?query=${searchQuery}`);
       } else {
@@ -53,10 +53,10 @@ export default function Home() {
               onChange={(e)=>{setSearchQuery(e.target.value)}}
               value={searchQuery}
               className={`w-full p-4 rounded-md focus:outline-blue-600 ring-2 ${searchError ? 'ring-red-700 placeholder-red-600' : 'ring-blue-300 placeholder-gray-400'}`}
-              placeholder={searchError ? "Please type something in the search box..." : "Search for jobs, companies, or keywords..."}
+              placeholder={searchError ? "Please type something in the search box..." : "Search for job roles, companies, or skills..."}
             />
-            <button onClick={handleSearch} className="absolute right-0 top-0 h-full px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
-              Search
+            <button onClick={handleSearch} className={`absolute right-0 top-0 h-full px-4 text-white rounded-md transition duration-300 ${searchError ? 'bg-red-600' : 'bg-blue-600 hover:bg-blue-700'}`}>
+              {searchError ? 'Error' : 'Search'}
             </button>
           </div>
       </div>
