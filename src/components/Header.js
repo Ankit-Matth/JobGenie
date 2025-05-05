@@ -3,13 +3,14 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from 'next/navigation';
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 const Header = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("/");
+  const { data: session } = useSession();
 
   const handleLinkClick = (href) => {
     setActiveLink(href);
@@ -27,6 +28,18 @@ const Header = () => {
   }, []);
 
   return (
+    <>
+    {session && !session.user.isEmailVerified && activeLink != "/verify" && (
+      <div className="bg-yellow-100 text-yellow-800 py-2 px-4 flex flex-row items-center justify-center space-x-1 text-sm sm:text-base">
+        <span className="flex items-center">
+        ✉️ Please verify your email to get personalized alerts in your inbox. 
+        </span>
+        <Link href="/verify" onClick={() => handleLinkClick("/verify")} className="underline font-medium hover:text-yellow-900">
+          Verify Now
+        </Link>
+      </div>
+    )}
+
     <header className="py-3 shadow-md mb-[2px]">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" onClick={() => handleLinkClick("/")} className="flex items-center space-x-2 ml-4 md:ml-0">
@@ -117,6 +130,7 @@ const Header = () => {
         </nav>
       </div>
     </header>
+    </>
   );
 };
 

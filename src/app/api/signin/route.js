@@ -28,6 +28,7 @@ export async function POST(request) {
             );
         }
 
+        // Set the user data in the session using NextAuth 
         await signIn("credentials", {
           user: JSON.stringify(user),
           redirect: false,

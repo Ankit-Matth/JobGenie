@@ -27,9 +27,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token._id = user._id;
+        token._id = user._id; 
         token.fullName = user.fullName;
         token.email = user.email;
+        token.isEmailVerified = user.isEmailVerified;
       }
       return token;
     },
@@ -38,6 +39,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user._id = token._id;
         session.user.fullName = token.fullName;
         session.user.email = token.email;
+        session.user.isEmailVerified = token.isEmailVerified;
       }
       return session;
     }

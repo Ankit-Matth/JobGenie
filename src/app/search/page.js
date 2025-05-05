@@ -77,7 +77,7 @@ useEffect(() => {
   let rafId;
   let startTime = null;
 
-  const stepDuration = 500;
+  const stepDuration = 700;
   const progressIncrement = 10;
 
   const animateProgress = (timestamp) => {
@@ -85,11 +85,11 @@ useEffect(() => {
     const elapsed = timestamp - startTime;
 
     setProgress((prev) => {
-      const next = prev + (progressIncrement * elapsed) / stepDuration;
+      const next = prev + (progressIncrement * elapsed) / (stepDuration*3);
 
-      // If it's the last step, cap at 90%
+      // If it's the last step, cap at 80%
       if (loadingStep === steps.length - 1) {
-        return Math.min(next, 90);
+        return Math.min(next, 80);
       }
 
       return Math.min(next, 100);

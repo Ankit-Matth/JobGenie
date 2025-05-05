@@ -81,7 +81,7 @@ const Page = () => {
                       <div className="relative font-medium">
                         <input
                           type="text"
-                          className="peer w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                          className="peer w-full px-4  border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 pt-6 pb-2"
                           id="fullName"
                           value={fullName}
                           onChange={handleFullNameChange}
@@ -101,7 +101,7 @@ const Page = () => {
                       <div className="relative font-medium">
                         <input
                           type="email"
-                          className="peer w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                          className="peer w-full px-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 pt-6 pb-2"
                           id="email"
                           value={email}
                           onChange={handleEmailChange}
@@ -121,7 +121,7 @@ const Page = () => {
                     </div>
                     <div className="relative font-medium">
                       <textarea
-                        className="peer w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                        className="peer w-full px-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 pt-6 pb-2"
                         rows="4"
                         id="description"
                         value={description}
