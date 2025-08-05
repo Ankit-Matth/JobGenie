@@ -2,7 +2,7 @@
 
 **Job Genie** is a centralized job search platform built to streamline and automate the job discovery process across multiple websites like **Naukri.com**, **Indeed**, and **Internshala**. It is a final year BTech major project aimed at solving the real-world inefficiencies job seekers face by providing an all-in-one solution.
 
-Job Genie PPT - https://drive.google.com/file/d/19c-xQFm17j5esRFddmqQgWRKCgzjigPx/view?usp=sharing
+Job Genie PPT - https://drive.google.com/file/d/1f6I7QhgTW8mW-5Zq9ACZ5suUjHLvEFWv/view?usp=sharing
 
 ## 🚀 Problem Statement
 
