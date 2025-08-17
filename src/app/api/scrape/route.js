@@ -29,7 +29,7 @@ const validateQuery = async (query) => {
  */
 const scrapeShine = async (query) => {
   const browser = await puppeteer.connect({
-    browserWSEndpoint: 'wss://chrome.browserless.io?token=2Ssu5MnKkTyehUAdc2585ab2a6c875d75a8740a2986facebc',
+    browserWSEndpoint: `wss://production-sfo.browserless.io?token=2Ssu5MnKkTyehUAdc2585ab2a6c875d75a8740a2986facebc`,
   });
   const page = await browser.newPage();
   await page.goto(`https://www.shine.com/job-search/${query}-jobs`, { waitUntil: "networkidle2" });
@@ -69,7 +69,7 @@ const scrapeShine = async (query) => {
  */
 const scrapeNaukri = async (query) => {
   const browser = await puppeteer.connect({
-    browserWSEndpoint: 'wss://chrome.browserless.io?token=2Ssu5MnKkTyehUAdc2585ab2a6c875d75a8740a2986facebc',
+    browserWSEndpoint: `wss://production-sfo.browserless.io?token=2Ssu5MnKkTyehUAdc2585ab2a6c875d75a8740a2986facebc`,
   });
   const page = await browser.newPage();
   await page.goto(`https://www.naukri.com/${query}-jobs?k=${query}`, { waitUntil: "networkidle2" });
@@ -108,7 +108,7 @@ const scrapeNaukri = async (query) => {
  */
 const scrapeInternshala = async (query) => {
   const browser = await puppeteer.connect({
-    browserWSEndpoint: 'wss://chrome.browserless.io?token=2Ssu5MnKkTyehUAdc2585ab2a6c875d75a8740a2986facebc',
+    browserWSEndpoint: `wss://production-sfo.browserless.io?token=2Ssu5MnKkTyehUAdc2585ab2a6c875d75a8740a2986facebc`,
   });
   const page = await browser.newPage();
   await page.goto(`https://internshala.com/jobs/keywords-${query}/`, { waitUntil: "networkidle2" });
