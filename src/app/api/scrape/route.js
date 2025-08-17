@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API);
@@ -28,7 +29,11 @@ const validateQuery = async (query) => {
  * STEP 2: Scrape Shine.com
  */
 const scrapeShine = async (query) => {
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const browser = await puppeteer.launch({
+   args: chromium.args,
+   executablePath: await chromium.executablePath(),
+   headless: chromium.headless,
+  });
   const page = await browser.newPage();
   await page.goto(`https://www.shine.com/job-search/${query}-jobs`, { waitUntil: "networkidle2" });
 
@@ -66,7 +71,11 @@ const scrapeShine = async (query) => {
  * STEP 3: Scrape Naukri.com
  */
 const scrapeNaukri = async (query) => {
-  const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"] });
+  const browser = await puppeteer.launch({
+   args: chromium.args,
+   executablePath: await chromium.executablePath(),
+   headless: chromium.headless,
+  });
   const page = await browser.newPage();
   await page.goto(`https://www.naukri.com/${query}-jobs?k=${query}`, { waitUntil: "networkidle2" });
 
@@ -103,7 +112,11 @@ const scrapeNaukri = async (query) => {
  * STEP 4: Scrape Internshala
  */
 const scrapeInternshala = async (query) => {
-  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] });
+  const browser = await puppeteer.launch({
+   args: chromium.args,
+   executablePath: await chromium.executablePath(),
+   headless: chromium.headless,
+  });
   const page = await browser.newPage();
   await page.goto(`https://internshala.com/jobs/keywords-${query}/`, { waitUntil: "networkidle2" });
 
