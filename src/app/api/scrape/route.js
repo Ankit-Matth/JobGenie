@@ -31,7 +31,8 @@ const validateQuery = async (query) => {
 const scrapeShine = async (query) => {
   const browser = await puppeteer.launch({
     args: chromium.args,
-    executablePath: await chromium.executablePath || '/usr/bin/chromium-browser',
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath, // must use this
     headless: chromium.headless,
   });
   const page = await browser.newPage();
@@ -73,7 +74,8 @@ const scrapeShine = async (query) => {
 const scrapeNaukri = async (query) => {
   const browser = await puppeteer.launch({
     args: chromium.args,
-    executablePath: await chromium.executablePath || '/usr/bin/chromium-browser',
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath, // must use this
     headless: chromium.headless,
   });
   const page = await browser.newPage();
@@ -114,7 +116,8 @@ const scrapeNaukri = async (query) => {
 const scrapeInternshala = async (query) => {
   const browser = await puppeteer.launch({
     args: chromium.args,
-    executablePath: await chromium.executablePath || '/usr/bin/chromium-browser',
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath, // must use this
     headless: chromium.headless,
   });
   const page = await browser.newPage();
