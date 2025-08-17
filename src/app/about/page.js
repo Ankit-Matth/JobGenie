@@ -24,7 +24,7 @@ const AboutUsPage = () => {
                 Meet <span className="text-yellow-500">Job Genie</span>
               </h2>
               <p className="text-gray-700 mb-4 pr-4 text-lg text-justify">
-              Tired of bouncing between multiple job sites? Job Genie is your magical one-stop platform for smarter job hunting! Discover listings from Indeed, Naukri, and Internshala — all in one place. Say goodbye to tab toggling or juggling multiple platforms and let Job Genie work its magic on your career!
+              Tired of bouncing between multiple job sites? Job Genie is your magical one-stop platform for smarter job hunting! Discover listings from Shine, Naukri, and Internshala — all in one place. Say goodbye to tab toggling or juggling multiple platforms and let Job Genie work its magic on your career!
               </p>
               <h3 className="text-4xl font-bold text-indigo-700 mb-4">Our Mission</h3>
               <p className="text-gray-700 mb-4 pr-4 text-lg text-justify">
@@ -69,7 +69,7 @@ const AboutUsPage = () => {
               />
               <h4 className="text-2xl font-semibold text-indigo-600 mb-2">Customized Filters</h4>
               <p className="text-gray-600 w-[240px] mx-auto">
-                Set preferences for job roles, locations, and companies to tailor your results.
+                Set preferences for job skills, job type, and locations to tailor your results.
               </p>
             </div>
             <div className="md:w-1/3 text-center">

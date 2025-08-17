@@ -2,22 +2,12 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const platforms = ["All", "Indeed", "Naukri", "Internshala"];
-
-const filters = {
-  location: ["Remote", "Bengaluru", "Mumbai", "Noida", "Hyderabad"],
-  salaryRange: ["< 10k", "10k-50k", "50k-100k", "> 100k"],
-  jobType: ["Full-Time", "Part-Time", "Internship", "Contract"],
-};
+const platforms = ["All", "Shine", "Naukri", "Internshala"];
 
 const SearchPage = () => {
   const hasFetched = useRef(false);
   const [selectedPlatform, setSelectedPlatform] = useState("All");
-  const [filtersState, setFiltersState] = useState({
-    location: "",
-    salaryRange: "",
-    jobType: "",
-  });
+  
   const [scrapedJobs, setScrapedJobs] = useState([]);
   const [noResultFound, setNoResultFound] = useState(false);
   const searchParams = useSearchParams();
@@ -29,48 +19,48 @@ const SearchPage = () => {
 
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState(searchParams.get("query") || '');
-  const [nextQuery, setNextQuery] = useState('');
   const [searchError, setSearchError] = useState(false);
 
   const [prev, setPrev] = useState(0);
-  const [next, setNext] = useState(6);
+  const [next, setNext] = useState(9);
 
   const steps = [
-    "Scraping data from Indeed",
+    "Scraping data from Shine.com",
     "Scraping data from Naukri.com",
     "Scraping data from Internshala",
     "Analysing & processing all data",
   ];
 
-  useEffect(() => {
-    if (hasFetched.current) return;
-    hasFetched.current = true;
+useEffect(() => {
+  if (!query) return;
 
-    fetch('/api/scrape', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query: query }),
+  setLoading(true);
+  setLoadingStep(0);
+  setScrapedJobs([]);
+  setNoResultFound(false);
+
+  fetch('/api/scrape', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ query }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.isDataScraped) {
+        setProgress(100);
+        setScrapedJobs(data.scrapedJobs);
+        setTimeout(() => setLoading(false), 1000);
+      } else {
+        setProgress(100);
+        setTimeout(() => setLoading(false), 1000);
+        setNoResultFound(true);
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.isDataScraped) {
-          setProgress(100);
-          setScrapedJobs(data.scrapedJobs);
-          setTimeout(() => {
-            setLoading(false);
-          }, 1000);
-        } else {
-          setProgress(100);
-          setTimeout(() => {
-            setLoading(false);
-          }, 1000);
-          setNoResultFound(true);
-        }
-      })
-      .catch(() => alert('Error occurred while scraping data'));
-  }, [nextQuery]);
+    .catch(() => alert('Error occurred while scraping data'));
+}, [query]); // 👈 run again whenever query from URL changes
+
 
   // Simulate loading with multiple steps
 useEffect(() => {
@@ -116,54 +106,27 @@ useEffect(() => {
 }, [loadingStep]);
 
   // Derived state: Filtered jobs
-  const filteredJobs = useMemo(() => {
-      return scrapedJobs.filter((job) => {
-        const matchesPlatform =
-          selectedPlatform === "All" || job.platform === selectedPlatform;
-        const matchesLocation =
-          !filtersState.location || job.location.includes(filtersState.location);
-        const matchesSalary =
-          !filtersState.salaryRange || job.salaryRange.includes(filtersState.salaryRange);
-        const matchesJobType =
-          !filtersState.jobType || job.jobType.includes(filtersState.jobType);
-        return (
-          matchesPlatform &&
-          matchesLocation &&
-          matchesSalary &&
-          matchesJobType
-        );
-      });
-    }, [scrapedJobs, selectedPlatform, filtersState]);
+ const filteredJobs = useMemo(() => {
+  return scrapedJobs.filter((job) => {
+    const matchesPlatform =
+      selectedPlatform === "All" || job.platform === selectedPlatform;
+    return matchesPlatform;
+  });
+}, [scrapedJobs, selectedPlatform]);
 
-  const handleFilterChange = (key, value) => {
-    setFiltersState((prev) => ({ ...prev, [key]: value }));
-  };
+const handleSearch = (e) => {
+  e.preventDefault();
+  if (searchQuery) {
+    setSelectedPlatform("All");
+    setPrev(0);
+    setNext(9);
+    router.push(`/search?query=${searchQuery}`);
+  } else {
+    setSearchError(true);
+    setTimeout(() => setSearchError(false), 1200);
+  }
+};
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery) {
-      // Reset all to default
-      setSelectedPlatform("All");
-      setFiltersState({
-        location: "",
-        salaryRange: "",
-        jobType: "",
-      });
-      setPrev(0);
-      setNext(6);
-
-      router.push(`/search?query=${searchQuery}`);
-      hasFetched.current = false;
-      setLoading(true);
-      setLoadingStep(0);
-      setNextQuery(searchQuery);
-    } else {
-      setSearchError(true)
-      setTimeout(() => {
-        setSearchError(false)
-      }, 1200);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -208,26 +171,6 @@ useEffect(() => {
                 </button>
               ))}
             </div>
-
-            {/* Filters */}
-            <div className="flex space-x-6">
-              {Object.entries(filters).map(([key, options]) => (
-                <select
-                  key={key}
-                  value={filtersState[key]}
-                  onChange={(e) => handleFilterChange(key, e.target.value)}
-                  className="p-2 bg-white border rounded-md ring-1 ring-gray-300 focus:ring-blue-500 focus:outline-none"
-                  disabled={loading || noResultFound} // Disable filters during loading
-                >
-                  <option value="">{key.charAt(0).toUpperCase() + key.slice(1)}</option>
-                  {options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -265,10 +208,11 @@ useEffect(() => {
             {filteredJobs.slice(prev, next).map((job) => (
             <div
               key={job.id}
-              className="bg-white shadow-md rounded-md p-6 hover:shadow-lg transition"
+              className="bg-white shadow-md rounded-md p-6 hover:shadow-lg transition flex flex-col justify-between"
               style={{ pointerEvents: (loading || noResultFound) ? "none" : "auto" }} // Disable pointer events during loading
             >
-              <div className="flex justify-between items-center">
+              <div>
+                              <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-gray-800">
                   {job.title}
                 </h2>
@@ -278,34 +222,19 @@ useEffect(() => {
               </div>
               <p className="text-gray-600">{job.company}</p>
               <p className="text-gray-500">{job.location}</p>
-              <p className="text-gray-800 font-bold">{job.salary}</p>
+              <p className="text-gray-800 font-bold">{job.experience}</p>
               
               <div className="my-2">
                 <span
-                  className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${
-                    job.jobType === "Full-Time"
-                      ? "bg-green-100 text-green-600"
-                      : job.jobType === "Part-Time"
-                      ? "bg-yellow-100 text-yellow-600"
-                      : "bg-gray-100 text-gray-600"
-                  }`}
+                  className={`inline-block px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-600"`}
                 >
-                  {job.jobType}
+                  {job.posted}
                 </span>
               </div>
-              
-              <div className="mt-3">
-                <h3 className="text-sm font-semibold text-gray-600">
-                  Skills Required:
-                </h3>
-                <ul className="text-gray-500 text-sm list-disc ml-5">
-                  {job.skills.map((skill, index) => (
-                    <li key={index}>{skill}</li>
-                  ))}
-                </ul>
               </div>
               
-              <a 
+              <div>
+                <a 
                 href={job.src} 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -318,6 +247,7 @@ useEffect(() => {
                   View Details
                 </button>
               </a>
+              </div>
             </div>
             ))}
 
@@ -331,21 +261,21 @@ useEffect(() => {
                 disabled={loading || noResultFound} // Disable button during loading
                 onClick={()=>{
                   if (prev !== 0) {
-                    setPrev((val)=>val-6)
-                    setNext((val)=>val-6)
+                    setPrev((val)=>val-9)
+                    setNext((val)=>val-9)
                   }
                 }}
               >
                 Previous
               </button>
-              <span className="mx-4">Page {Math.floor(prev / 6) + 1} of {Math.ceil(filteredJobs.length/6)}</span>
+              <span className="mx-4">Page {Math.floor(prev / 9) + 1} of {Math.ceil(filteredJobs.length/9)}</span>
               <button
-                className={`px-2 py-1 ${next == 12 ? 'hover:cursor-not-allowed' : ''} text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700`}
+                className={`px-2 py-1 ${next == 18 ? 'hover:cursor-not-allowed' : ''} text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700`}
                 disabled={loading || noResultFound} // Disable button during loading
                 onClick={()=>{
-                  if (next !== 12) {
-                    setNext((val)=>val+6)
-                    setPrev((val)=>val+6)
+                  if (next !== filteredJobs.length) {
+                    setNext((val)=>val+9)
+                    setPrev((val)=>val+9)
                   }
                 }}
               >

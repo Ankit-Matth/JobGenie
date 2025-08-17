@@ -44,7 +44,7 @@ export default function Home() {
             Discover Your Dream Job Effortlessly!
           </h1>
           <p className="mt-2 text-2xl text-gray-600 max-w-2xl text-center my-3">
-            Streamline your job search across top platforms like Indeed, Naukri, and Internshala—all from one place.
+            Streamline your job search across top platforms like Shine, Naukri, and Internshala — all from one place.
           </p>
 
           <div className="relative w-full max-w-lg mb-8 mt-8">
@@ -72,7 +72,7 @@ export default function Home() {
           />
           <h2 className="text-xl font-semibold mb-2">Unified Job Search</h2>
           <p className="text-gray-700">
-            Search jobs across top platforms like Indeed, Naukri, and Internshala - all from one place.
+            Search for jobs in one place across top platforms like Shine, Naukri, and Internshala.
           </p>
         </div>
 

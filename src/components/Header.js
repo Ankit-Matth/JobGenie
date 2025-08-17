@@ -32,7 +32,8 @@ const Header = () => {
     {session && !session.user.isEmailVerified && activeLink != "/verify" && (
       <div className="bg-yellow-100 text-yellow-800 py-2 px-4 flex flex-row items-center justify-center space-x-1 text-sm sm:text-base">
         <span className="flex items-center">
-        ✉️ Please verify your email to get personalized alerts in your inbox. 
+          <Image src="/images/email.png" alt="Email icon" width={20} height={10}/> 
+          &nbsp;Please verify your email to get personalized alerts in your inbox. 
         </span>
         <Link href="/verify" onClick={() => handleLinkClick("/verify")} className="underline font-medium hover:text-yellow-900">
           Verify Now

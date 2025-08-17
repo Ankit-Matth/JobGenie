@@ -77,7 +77,7 @@ const Footer = () => {
       <footer className="bg-gray-900 text-white py-4">
         <div className="flex justify-between items-center px-4">
           <p className="text-sm">
-            Copyright &copy; Job Genie {new Date().getFullYear()} - All Rights Reserved.
+            &copy; {new Date().getFullYear()} Job Genie – All Rights Reserved.
           </p>
           <div className="flex space-x-4">
             <button
