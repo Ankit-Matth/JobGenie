@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import puppeteer from 'puppeteer-core';
-import chromium from '@sparticuz/chromium';
+import chromium from 'chrome-aws-lambda';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API);
@@ -30,9 +30,9 @@ const validateQuery = async (query) => {
  */
 const scrapeShine = async (query) => {
   const browser = await puppeteer.launch({
-   args: chromium.args,
-   executablePath: await chromium.executablePath(),
-   headless: chromium.headless,
+    args: chromium.args,
+    executablePath: await chromium.executablePath || '/usr/bin/chromium-browser',
+    headless: chromium.headless,
   });
   const page = await browser.newPage();
   await page.goto(`https://www.shine.com/job-search/${query}-jobs`, { waitUntil: "networkidle2" });
@@ -72,9 +72,9 @@ const scrapeShine = async (query) => {
  */
 const scrapeNaukri = async (query) => {
   const browser = await puppeteer.launch({
-   args: chromium.args,
-   executablePath: await chromium.executablePath(),
-   headless: chromium.headless,
+    args: chromium.args,
+    executablePath: await chromium.executablePath || '/usr/bin/chromium-browser',
+    headless: chromium.headless,
   });
   const page = await browser.newPage();
   await page.goto(`https://www.naukri.com/${query}-jobs?k=${query}`, { waitUntil: "networkidle2" });
@@ -113,9 +113,9 @@ const scrapeNaukri = async (query) => {
  */
 const scrapeInternshala = async (query) => {
   const browser = await puppeteer.launch({
-   args: chromium.args,
-   executablePath: await chromium.executablePath(),
-   headless: chromium.headless,
+    args: chromium.args,
+    executablePath: await chromium.executablePath || '/usr/bin/chromium-browser',
+    headless: chromium.headless,
   });
   const page = await browser.newPage();
   await page.goto(`https://internshala.com/jobs/keywords-${query}/`, { waitUntil: "networkidle2" });
