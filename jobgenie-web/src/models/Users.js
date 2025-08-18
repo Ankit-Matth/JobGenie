@@ -20,15 +20,15 @@ const userSchema = new mongoose.Schema({
   },
   emailVerificationToken: String,
   emailTokenExpires: Date,
-  preferredRoles: {
+  preferredSkills: {
+    type: String,
+    default: "None",
+  },
+  preferredJobType:  {
     type: String,
     default: "None",
   },
   preferredLocations:  {
-    type: String,
-    default: "None",
-  },
-  preferredCompanies:  {
     type: String,
     default: "None",
   },

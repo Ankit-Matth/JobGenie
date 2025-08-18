@@ -22,7 +22,7 @@ const SearchPage = () => {
   const [searchError, setSearchError] = useState(false);
 
   const [prev, setPrev] = useState(0);
-  const [next, setNext] = useState(9);
+  const [next, setNext] = useState(6);
 
   const steps = [
     "Scraping data from Shine.com",
@@ -30,6 +30,15 @@ const SearchPage = () => {
     "Scraping data from Internshala",
     "Analysing & processing all data",
   ];
+
+const shuffleArray = (array) => {
+  const newArr = [...array];
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+};
 
 useEffect(() => {
   if (!query) return;
@@ -50,7 +59,7 @@ useEffect(() => {
     .then((data) => {
       if (data.isDataScraped) {
         setProgress(100);
-        setScrapedJobs(data.scrapedJobs);
+        setScrapedJobs(shuffleArray(data.scrapedJobs)); // shuffle here
         setTimeout(() => setLoading(false), 1000);
       } else {
         setProgress(100);
@@ -114,12 +123,17 @@ useEffect(() => {
   });
 }, [scrapedJobs, selectedPlatform]);
 
+useEffect(() => {
+  setPrev(0);
+  setNext(6);
+}, [selectedPlatform, scrapedJobs])
+
 const handleSearch = (e) => {
   e.preventDefault();
   if (searchQuery) {
     setSelectedPlatform("All");
     setPrev(0);
-    setNext(9);
+    setNext(6);
     router.push(`/search?query=${searchQuery}`);
   } else {
     setSearchError(true);
@@ -261,21 +275,21 @@ const handleSearch = (e) => {
                 disabled={loading || noResultFound} // Disable button during loading
                 onClick={()=>{
                   if (prev !== 0) {
-                    setPrev((val)=>val-9)
-                    setNext((val)=>val-9)
+                    setPrev((val)=>val-6)
+                    setNext((val)=>val-6)
                   }
                 }}
               >
                 Previous
               </button>
-              <span className="mx-4">Page {Math.floor(prev / 9) + 1} of {Math.ceil(filteredJobs.length/9)}</span>
+              <span className="mx-4">Page {Math.floor(prev / 6) + 1} of {Math.ceil(filteredJobs.length/6)}</span>
               <button
-                className={`px-2 py-1 ${next == 18 ? 'hover:cursor-not-allowed' : ''} text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700`}
+                className={`px-2 py-1 ${next == filteredJobs.length ? 'hover:cursor-not-allowed' : ''} text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700`}
                 disabled={loading || noResultFound} // Disable button during loading
                 onClick={()=>{
                   if (next !== filteredJobs.length) {
-                    setNext((val)=>val+9)
-                    setPrev((val)=>val+9)
+                    setNext((val)=>val+6)
+                    setPrev((val)=>val+6)
                   }
                 }}
               >

@@ -67,7 +67,7 @@ const Page = () => {
   return (
     <>
       {showModal && <ConfirmationModal onClose={closeModal} />}
-      <div className="min-h-screen flex flex-col items-center justify-center py-12">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center py-12">
         <div className="bg-white rounded-lg w-full max-w-5xl">
           <p className="text-4xl text-gray-800 mb-14 text-center">
             We’re here to help! Reach out to us anytime.

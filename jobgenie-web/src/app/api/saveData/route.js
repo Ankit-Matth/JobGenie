@@ -16,11 +16,11 @@ export async function POST(request) {
     }
 
     if (preferences) {
-      const { roles, locations, companies } = preferences;
+      const { skills, jobType, locations } = preferences;
 
-      if (roles) updateData.preferredRoles = roles;
+      if (skills) updateData.preferredSkills = skills;
+      if (jobType) updateData.preferredJobType = jobType;
       if (locations) updateData.preferredLocations = locations;
-      if (companies) updateData.preferredCompanies = companies;
     }
     
     const updatedUser = await UserModel.findOneAndUpdate(

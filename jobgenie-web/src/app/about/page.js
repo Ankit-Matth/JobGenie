@@ -44,31 +44,31 @@ const AboutUsPage = () => {
         </div>
 
         <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-12 py-12 px-6">
-          <h3 className="text-4xl font-bold text-indigo-700 mb-12 text-center">What We Offer</h3>
+          <h3 className="text-4xl font-bold text-indigo-700 mb-16 text-center">What We Offer</h3>
           <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8">
             <div className="md:w-1/3 text-center">
               <Image
                 src="/images/all-in-one-platform.png" 
                 alt="Centralized Listings"
-                width={250}
-                height={250}
+                width={200}
+                height={200}
                 className="object-cover rounded-lg shadow-lg mx-auto mb-4"
               />
-              <h4 className="text-2xl font-semibold text-indigo-600 mb-2">Centralized Listings</h4>
-              <p className="text-gray-600 w-[240px] mx-auto">
-                Discover jobs from multiple platforms in one search, saving you time and effort.
+              <h4 className="text-xl font-semibold text-indigo-600 mb-2">Centralized Listings</h4>
+              <p className="text-gray-600 text-sm w-[240px] mx-auto">
+                Discover jobs from multiple platforms in one search, saving time & efforts.
               </p>
             </div>
             <div className="md:w-1/3 text-center">
               <Image
                 src="/images/custom-filters.png"
                 alt="Customized Filters"
-                width={250}
-                height={250}
+                width={200}
+                height={200}
                 className="object-cover rounded-lg shadow-lg mx-auto mb-4"
               />
-              <h4 className="text-2xl font-semibold text-indigo-600 mb-2">Customized Filters</h4>
-              <p className="text-gray-600 w-[240px] mx-auto">
+              <h4 className="text-xl font-semibold text-indigo-600 mb-2">Customized Filters</h4>
+              <p className="text-gray-600 text-sm w-[240px] mx-auto">
                 Set preferences for job skills, job type, and locations to tailor your results.
               </p>
             </div>
@@ -76,24 +76,24 @@ const AboutUsPage = () => {
               <Image
                 src="/images/real-time-alerts.png"
                 alt="Real-Time Alerts"
-                width={250}
-                height={250}
+                width={200}
+                height={200}
                 className="object-cover rounded-lg shadow-lg mx-auto mb-4"
               />
-              <h4 className="text-2xl font-semibold text-indigo-600 mb-2">Real-Time Alerts</h4>
-              <p className="text-gray-600 w-[240px] mx-auto">
-               Receive instant notifications about new opportunities directly in your inbox.
+              <h4 className="text-xl font-semibold text-indigo-600 mb-2">Real-Time Alerts</h4>
+              <p className="text-gray-600 text-sm w-[240px] mx-auto">
+               Receive fresh job updates every 24 hours, directly in your inbox.
               </p>
             </div>
           </div>
         </div>
 
         <div className="bg-indigo-700 shadow-lg rounded-lg overflow-hidden pt-12 pb-14 px-6 text-center text-white">
-          <h3 className="text-4xl font-bold mb-4">Ready to Find Your Dream Job?</h3>
-          <p className="mb-8 text-lg">
+          <h3 className="text-3xl font-bold mb-4">Ready to Find Your Dream Job?</h3>
+          <p className="mb-8 text-base">
             Join <strong>Job Genie</strong> today and start receiving opportunities tailored just for you.
           </p>
-          <Link href={isLoggedIn ? '/dashboard' : '/login'} className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-3 px-6 rounded-lg transition duration-200 mt-4">
+          <Link href={isLoggedIn ? '/dashboard' : '/login'} className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 mt-4">
             {isLoggedIn ? 'Set Preferences for Job Alerts' : 'Create Your Free Account'}
           </Link>
         </div>

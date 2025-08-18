@@ -13,9 +13,9 @@ export default function Dashboard() {
   const [email, setEmail] = useState(session?.user?.email || '');
   const [editingProfile, setEditingProfile] = useState(false);
 
-  const [skills, setSkills] = useState('None');
-  const [jobType, setJobType] = useState('None');
-  const [locations, setLocations] = useState('None');
+  const [skills, setSkills] = useState(session?.user?.preferredSkills || '');
+  const [jobType, setJobType] = useState(session?.user?.preferredJobType || '');
+  const [locations, setLocations] = useState(session?.user?.preferredLocations || '');
   const [editingPref, setEditingPref] = useState(false);
 
   if (status === 'loading') return <div className="text-center mt-10">Loading...</div>;
@@ -30,7 +30,6 @@ export default function Dashboard() {
       });
   
       if (response.status === 200) {
-        alert('Profile updated!');
         // Sign in the user automatically after verification to upadte session
         await signIn('credentials', { user: response.data.user, redirect: false });
       } else {
@@ -52,7 +51,8 @@ export default function Dashboard() {
       });
   
       if (response.status === 200) {
-        alert('Preferences saved!');
+        // Sign in the user automatically after verification to upadte session
+        await signIn('credentials', { user: response.data.user, redirect: false });
       } else {
         alert('Failed to update preferences.');
       }
@@ -83,8 +83,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="bg-gray-100 p-6 mb-2">
-      <div className="max-w-6xl mx-auto my-6 bg-white rounded-2xl shadow-lg overflow-hidden">
+    <div className="bg-gray-100 p-1 mb-2">
+      <div className="min-h-[60vh] m-6 bg-white rounded-2xl shadow-lg overflow-hidden">
         {/* Header */}
         <div className="bg-blue-600 text-white px-8 py-6 flex justify-between items-center">
           <h2 className="text-2xl font-bold">Welcome back, {session.user.fullName}!</h2>
@@ -191,10 +191,10 @@ export default function Dashboard() {
                       onChange={(e) => setJobType(e.target.value)}
                       className="w-full border rounded-lg px-4 py-2"
                     >
-                      <option value="">Select Job Type</option>
+                      <option value="None">None</option>
                       <option value="Full Time">Full Time</option>
-                      <option value="Internship">Internship</option>
                       <option value="Part Time">Part Time</option>
+                      <option value="Internship">Internship</option>
                       <option value="Remote">Remote</option>
                       <option value="Fresher">Fresher</option>
                     </select>

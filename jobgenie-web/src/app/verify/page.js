@@ -61,9 +61,9 @@ export default function VerifyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-purple-100 flex flex-col items-center justify-center px-6 py-12">
-      <div className="w-full max-w-4xl bg-white p-8 rounded-xl shadow-xl border border-gray-100">
-        <h2 className="text-4xl font-semibold text-gray-800 mb-8 text-center">Email Verification</h2>
+    <div className="min-h-[70vh] bg-gradient-to-r from-blue-100 to-purple-100 flex flex-col items-center justify-center p-12">
+      <div className="w-full bg-white p-12 rounded-xl shadow-xl border border-gray-100">
+        <h2 className="text-4xl font-semibold text-gray-800 mb-8">Email Verification</h2>
 
         {session?.user && (
           <>
@@ -85,7 +85,7 @@ export default function VerifyPage() {
         {!token && !emailSent && !isLoading && (
           <button
             onClick={sendEmail}
-            className="bg-blue-600 hover:bg-blue-700 w-full md:w-1/3 text-white font-semibold px-6 py-3 rounded-lg transition-all mb-6 shadow-md"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition-all mb-6 shadow-md"
           >
             Send Verification Email
           </button>
@@ -95,7 +95,7 @@ export default function VerifyPage() {
         {token && !isVerified && !isExpired && !isLoading && !status && (
           <button
             onClick={verifyEmail}
-            className="bg-green-600 hover:bg-green-700 w-full md:w-1/3 text-white font-semibold px-6 py-3 rounded-lg transition-all mb-6 shadow-md"
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg transition-all mb-6 shadow-md"
           >
             Verify Now
           </button>
