@@ -1,0 +1,15 @@
+name: JobGenie Cron Trigger
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # runs every 5 minutes (UTC)
+  workflow_dispatch: {}      # lets you trigger manually too
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Vercel API endpoint
+        run: |
+          curl -sS -X GET "https://the-job-genie.vercel.app/api/send-daily-email" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
