@@ -24,10 +24,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "None",
   },
-  preferredJobType:  {
-    type: String,
-    default: "None",
-  },
   preferredLocations:  {
     type: String,
     default: "None",

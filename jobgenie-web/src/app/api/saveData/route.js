@@ -16,10 +16,9 @@ export async function POST(request) {
     }
 
     if (preferences) {
-      const { skills, jobType, locations } = preferences;
+      const { skills, locations } = preferences;
 
       if (skills) updateData.preferredSkills = skills;
-      if (jobType) updateData.preferredJobType = jobType;
       if (locations) updateData.preferredLocations = locations;
     }
     

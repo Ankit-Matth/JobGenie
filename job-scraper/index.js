@@ -25,9 +25,9 @@ app.use(cors({
 
 app.use(express.json());
 
-const scrapeShine = async (browser, query) => {
+const scrapeShine = async (browser, searchURL) => {
   const page = await browser.newPage();
-  await page.goto(`https://www.shine.com/job-search/${query}-jobs`, { waitUntil: "networkidle2" });
+  await page.goto(searchURL, { waitUntil: "networkidle2" });
 
   const jobs = await page.evaluate(() => {
     return Array.from(document.querySelectorAll(".jobCardNova_bigCard__W2xn3.jdbigCard"))
@@ -57,7 +57,7 @@ const scrapeShine = async (browser, query) => {
   return jobs;
 };
 
-const scrapeNaukri = async (browser, query) => {
+const scrapeNaukri = async (browser, searchURL) => {
   const page = await browser.newPage();
 
   await page.setUserAgent(
@@ -68,7 +68,7 @@ const scrapeNaukri = async (browser, query) => {
     Object.defineProperty(navigator, 'webdriver', { get: () => false });
   }); 
 
-  await page.goto(`https://www.naukri.com/${query}-jobs?k=${query}`, { waitUntil: "networkidle2" });
+  await page.goto(searchURL, { waitUntil: "networkidle2" });
 
   const jobs = await page.evaluate(() => {
     return Array.from(document.querySelectorAll(".srp-jobtuple-wrapper"))
@@ -98,9 +98,9 @@ const scrapeNaukri = async (browser, query) => {
   return jobs;
 };
 
-const scrapeInternshala = async (browser, query) => {
+const scrapeInternshala = async (browser, searchURL) => {
   const page = await browser.newPage();
-  await page.goto(`https://internshala.com/jobs/keywords-${query}/`, { waitUntil: "networkidle2" });
+  await page.goto(searchURL, { waitUntil: "networkidle2" });
 
   const jobs = await page.evaluate(() => {
     return Array.from(document.querySelectorAll(".individual_internship"))
@@ -149,11 +149,15 @@ app.get("/scrape-jobs", async (req, res) => {
       headless: false,
     });
 
+    const shineURL = `https://www.shine.com/job-search/${query}-jobs`
+    const naukriURL = `https://www.naukri.com/${query}-jobs?k=${query}`
+    const internshalaURL = `https://internshala.com/jobs/keywords-${query}/`
+
     // Run in parallel
     const [shineJobs, naukriJobs, internshalaJobs] = await Promise.all([
-      scrapeShine(browser, query),
-      scrapeNaukri(browser, query),
-      scrapeInternshala(browser, query),
+      scrapeShine(browser, shineURL),
+      scrapeNaukri(browser, naukriURL),
+      scrapeInternshala(browser, internshalaURL),
     ]);
 
     const allJobs = [...shineJobs, ...naukriJobs, ...internshalaJobs];
@@ -171,9 +175,54 @@ app.get("/scrape-jobs", async (req, res) => {
 });
 
 app.get("/scrape-jobs-personalized", async (req, res) => {
-  const query = req.query.query || "reactjs";
+  let { preferredSkills = "reactjs", preferredLocations = "None" } = req.query || {};
 
-  res.send("Hello Ankit...")
+  preferredSkills = preferredSkills.trim().toLowerCase()
+  preferredLocations = preferredLocations.trim().toLowerCase()
+
+  let browser;
+
+  try {
+    browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: { width: 1920, height: 1080 },
+      executablePath: await chromium.executablePath(),
+      headless: false,
+    });
+
+    let shineURL
+    let naukriURL
+    let internshalaURL
+
+    if (preferredLocations == "none") {
+      shineURL = `https://www.shine.com/job-search/${preferredSkills}-jobs`
+      naukriURL = `https://www.naukri.com/${preferredSkills}-jobs?k=${preferredSkills}`
+      internshalaURL = `https://internshala.com/jobs/keywords-${preferredSkills}/`
+    } else {
+      shineURL = `https://www.shine.com/job-search/${preferredSkills}-jobs-in-${preferredLocations}?q=${preferredSkills}&qActual=${preferredSkills}&loc=${preferredLocations}`
+      naukriURL = `https://www.naukri.com/${preferredSkills}-jobs-in-${preferredLocations}?k=${preferredSkills}&l=${preferredLocations}`
+      internshalaURL = `https://internshala.com/jobs/keywords-${preferredSkills}/jobs-in-${preferredLocations}/`
+    }
+
+    // Run in parallel
+    const [shineJobs, naukriJobs, internshalaJobs] = await Promise.all([
+      scrapeShine(browser, shineURL),
+      scrapeNaukri(browser, naukriURL),
+      scrapeInternshala(browser, internshalaURL),
+    ]);
+
+    const allJobs = [...shineJobs, ...naukriJobs, ...internshalaJobs];
+
+    res.status(200).json({
+      isDataScraped: true,
+      scrapedJobs: allJobs,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to scrape jobs" });
+  } finally {
+    if (browser) await browser.close();
+  }
 });
 
 // For local use, we would normally use regular puppeteer, which comes 

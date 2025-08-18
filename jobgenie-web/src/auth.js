@@ -32,7 +32,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.email = user.email;
         token.isEmailVerified = user.isEmailVerified;
         token.preferredSkills = user.preferredSkills;
-        token.preferredJobType = user.preferredJobType;
         token.preferredLocations = user.preferredLocations;
       }
       return token;
@@ -44,7 +43,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.email = token.email;
         session.user.isEmailVerified = token.isEmailVerified;
         session.user.preferredSkills = token.preferredSkills;
-        session.user.preferredJobType = token.preferredJobType;
         session.user.preferredLocations = token.preferredLocations;
       }
       return session;

@@ -5,21 +5,73 @@ import { signIn } from 'next-auth/react';
 import axios from 'axios';
 import Link from 'next/link';
 
+{/* Custom Dropdown Component */}
+function SmallDropdown({ options, value, onChange }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="relative w-[300px]">
+      {/* Closed box */}
+      <div
+        className="border rounded-lg px-4 h-11 cursor-pointer bg-white flex justify-between items-center"
+        onClick={() => setOpen(!open)}
+      >
+        <span>{value || "Select..."}</span>
+        <span className="ml-2">▾</span> {/* arrow */}
+      </div>
+
+      {/* Dropdown list opens above */}
+      {open && (
+        <div className="absolute bottom-full mb-1 w-full border rounded-lg bg-white max-h-60 overflow-y-auto z-50 shadow-lg">
+          {options.map((option) => (
+            <div
+              key={option}
+              className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
+              onClick={() => {
+                onChange(option);
+                setOpen(false);
+              }}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const { data: session, status } = useSession();
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('preferences');
 
   const [fullName, setFullName] = useState(session?.user?.fullName || '');
   const [email, setEmail] = useState(session?.user?.email || '');
   const [editingProfile, setEditingProfile] = useState(false);
 
   const [skills, setSkills] = useState(session?.user?.preferredSkills || '');
-  const [jobType, setJobType] = useState(session?.user?.preferredJobType || '');
   const [locations, setLocations] = useState(session?.user?.preferredLocations || '');
   const [editingPref, setEditingPref] = useState(false);
 
   if (status === 'loading') return <div className="text-center mt-10">Loading...</div>;
   if (!session) return <div className="text-center mt-10">Not signed in.</div>;
+
+  const skillsOptions = [
+    "None", "AI", "Angular", "AWS", "Azure", "Business Development", "C", "C#", "C++", "Cloud Computing", "Content Writing",
+    "Cybersecurity", "Customer Support", "Data Science", "DevOps", "Digital Marketing", "Django", "Docker", "Elasticsearch", "Express", "Flask",
+    "Go", "Graphic Design", "GraphQL", "GCP", "Java", "JavaScript", "Kotlin", "Kubernetes", "Laravel", "Linux",
+    "Machine Learning", "MongoDB", "MySQL", "Networking", "Next.js", "NLP", "Node.js", "PHP", "PostgreSQL", "Python",
+    "React", "Redis", "Ruby", "Rust", "Sales", "Scala", "SEO", "Spring Boot", "Swift", "TypeScript",
+    "UI/UX Design", "Vue.js"
+  ];
+
+  const locationOptions = [
+    "None", "Ahmedabad", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bangalore", "Bhopal", "Bihar", "Chandigarh", "Chennai", "Chhattisgarh",
+    "Delhi", "Goa", "Gujarat", "Gurgaon", "Himachal Pradesh", "Hyderabad", "Indore", "Jaipur", "Jharkhand", "Karnataka",
+    "Kerala", "Kolkata", "Lucknow", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Mumbai", "Nagaland", "Nagpur",
+    "Noida", "Odisha", "Patna", "Punjab", "Pune", "Rajasthan", "Remote", "Sikkim", "Singapore", "Surat",
+    "Tamil Nadu", "Telangana", "Tripura", "UK", "UP", "USA", "Uttarakhand", "West Bengal"
+  ];
 
   const handleProfileSave = async () => { 
     setEditingProfile(false);
@@ -44,7 +96,7 @@ export default function Dashboard() {
   const handlePrefSave = async () => {
     setEditingPref(false);
     try {
-      const preferences = {skills, jobType, locations};
+      const preferences = {skills, locations};
       const response = await axios.post('/api/saveData', {
         preferences: preferences,
         email: email,
@@ -84,7 +136,7 @@ export default function Dashboard() {
 
   return (
     <div className="bg-gray-100 p-1 mb-2">
-      <div className="min-h-[60vh] m-6 bg-white rounded-2xl shadow-lg overflow-hidden">
+      <div className="min-h-[60vh] m-6 bg-white rounded-2xl shadow-lg overflow-visible">
         {/* Header */}
         <div className="bg-blue-600 text-white px-8 py-6 flex justify-between items-center">
           <h2 className="text-2xl font-bold">Welcome back, {session.user.fullName}!</h2>
@@ -98,16 +150,6 @@ export default function Dashboard() {
 
         {/* Tabs */}
         <div className="border-b flex bg-gray-50 px-8 pt-4 space-x-4">
-          <button
-            onClick={() => setActiveTab('dashboard')}
-            className={`py-2 px-4 font-medium border-b-2 ${
-              activeTab === 'dashboard'
-                ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-blue-600'
-            }`}
-          >
-            Dashboard
-          </button>
           <button
             onClick={() => setActiveTab('preferences')}
             className={`py-2 px-4 font-medium border-b-2 ${
@@ -130,29 +172,20 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Main Content */}
         <div className="px-8 py-6">
-          {/* Dashboard Tab */}
-          {activeTab === 'dashboard' && (
-            <div className="space-y-6">
-              <h3 className="text-xl font-semibold text-gray-800">Jobs sent to your email</h3>
-              ....... listing from MongoDB collection
-            </div>
-          )}
-
           {/* Preferences Tab */}
           {activeTab === 'preferences' && (
             <div className="space-y-6">
               <h3 className="text-xl font-semibold text-gray-800">Job Preferences</h3>
               {!editingPref ? (
                 <div className="space-y-4">
+                  <div className="text-red-600">
+                    <i>*Support for more preferences coming soon...</i>
+                  </div>
+
                   <div className="flex justify-between bg-gray-100 p-3">
                     <span className="text-gray-600">Preferred Skills</span>
                     <span className="font-semibold">{skills}</span>
-                  </div>
-                  <div className="flex justify-between bg-gray-100 p-3">
-                    <span className="text-gray-600">Preferred Job Type</span>
-                    <span className="font-semibold">{jobType}</span>
                   </div>
                   <div className="flex justify-between bg-gray-100 p-3">
                     <span className="text-gray-600">Preferred Locations</span>
@@ -167,49 +200,20 @@ export default function Dashboard() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="text-sm text-gray-600">
-                    <i>*Enter comma-separated values for multiple entries.</i>
+                  <div className="text-red-600">
+                    <i>*Must choose skills to receive email alerts.</i>
                   </div>
 
                   {/* Skills */}
                   <div>
                     <label className="block mb-1 text-sm text-gray-600">Preferred Skills</label>
-                    <input
-                      type="text"
-                      value={skills}
-                      onChange={(e) => setSkills(e.target.value)}
-                      className="w-full border rounded-lg px-4 py-2"
-                      placeholder="e.g., React, Node.js, Python"
-                    />
-                  </div>
-
-                  {/* Job Type */}
-                  <div>
-                    <label className="block mb-1 text-sm text-gray-600">Preferred Job Type</label>
-                    <select
-                      value={jobType}
-                      onChange={(e) => setJobType(e.target.value)}
-                      className="w-full border rounded-lg px-4 py-2"
-                    >
-                      <option value="None">None</option>
-                      <option value="Full Time">Full Time</option>
-                      <option value="Part Time">Part Time</option>
-                      <option value="Internship">Internship</option>
-                      <option value="Remote">Remote</option>
-                      <option value="Fresher">Fresher</option>
-                    </select>
+                    <SmallDropdown options={skillsOptions} value={skills} onChange={setSkills} />
                   </div>
 
                   {/* Locations */}
                   <div>
                     <label className="block mb-1 text-sm text-gray-600">Preferred Locations</label>
-                    <input
-                      type="text"
-                      value={locations}
-                      onChange={(e) => setLocations(e.target.value)}
-                      className="w-full border rounded-lg px-4 py-2"
-                      placeholder="e.g., Delhi, Remote"
-                    />
+                    <SmallDropdown options={locationOptions} value={locations} onChange={setLocations} />
                   </div>
 
                   <div className="flex space-x-3">
