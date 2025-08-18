@@ -136,8 +136,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to Puppeteer setup by Ankit Matth for Serverless environment.");
 });
 
-app.get("/scrape-jobs", async (req, res) => {
-  const query = req.query.query || "reactjs";
+app.post("/scrape-jobs", async (req, res) => {
+  const query = req.body.query || "reactjs";
 
   let browser;
 
@@ -174,8 +174,8 @@ app.get("/scrape-jobs", async (req, res) => {
   }
 });
 
-app.get("/scrape-jobs-personalized", async (req, res) => {
-  let { preferredSkills = "reactjs", preferredLocations = "None" } = req.query || {};
+app.post("/scrape-jobs-personalized", async (req, res) => {
+  let { preferredSkills = "reactjs", preferredLocations = "None" } = req.body || {};
 
   preferredSkills = preferredSkills.trim().toLowerCase()
   preferredLocations = preferredLocations.trim().toLowerCase()
