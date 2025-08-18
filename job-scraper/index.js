@@ -104,12 +104,12 @@ const scrapeInternshala = async (browser, query) => {
 
   const jobs = await page.evaluate(() => {
     return Array.from(document.querySelectorAll(".individual_internship"))
-      .slice(0, 6)
+      .slice(1, 7)
       .map((job, idx) => {
         const title = job.querySelector(".job-internship-name a.job-title-href")?.innerText.trim() || "N/A";
         const company = job.querySelector(".company-name")?.innerText.trim() || "N/A";
         const location = job.querySelector(".locations a")?.innerText.trim() || "N/A";
-        const salary = job.querySelector(".stipend")?.innerText.trim() || "N/A";
+        const salary = job.querySelector(".stipend")?.innerText.trim() || job.querySelector('.row-1-item span.desktop')?.innerText.trim() || "N/A";
         const posted = job.querySelector(".detail-row-2 .status-inactive span")?.innerText.trim() || "N/A";
 
         let relativeUrl = job.getAttribute("data-href") || job.querySelector(".job-internship-name a")?.href || "#";
