@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Call Vercel API endpoint
         run: |
-          curl -sS -X GET "https://the-job-genie.vercel.app/send-daily-mails" \
+          curl -sS -X GET "https://the-job-genie.vercel.app/api/send-daily-mails" \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
