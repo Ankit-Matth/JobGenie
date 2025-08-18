@@ -133,11 +133,11 @@ const scrapeInternshala = async (browser, query) => {
 };
 
 app.get("/", (req, res) => {
-  res.send("Welcome to Puppeteer setup for Serverless environment");
+  res.send("Welcome to Puppeteer setup by Ankit Matth for Serverless environment.");
 });
 
-app.post("/scrape-jobs", async (req, res) => {
-  const query = req.body.query || "reactjs";
+app.get("/scrape-jobs", async (req, res) => {
+  const query = req.query.query || "reactjs";
 
   let browser;
 
@@ -149,10 +149,12 @@ app.post("/scrape-jobs", async (req, res) => {
       headless: false,
     });
 
-    // Sequential scraping
-    const shineJobs = await scrapeShine(browser, query);
-    const naukriJobs = await scrapeNaukri(browser, query);
-    const internshalaJobs = await scrapeInternshala(browser, query);
+    // Run in parallel
+    const [shineJobs, naukriJobs, internshalaJobs] = await Promise.all([
+      scrapeShine(browser, query),
+      scrapeNaukri(browser, query),
+      scrapeInternshala(browser, query),
+    ]);
 
     const allJobs = [...shineJobs, ...naukriJobs, ...internshalaJobs];
 
@@ -168,6 +170,11 @@ app.post("/scrape-jobs", async (req, res) => {
   }
 });
 
+app.get("/scrape-jobs-personalized", async (req, res) => {
+  const query = req.query.query || "reactjs";
+
+  res.send("Hello Ankit...")
+});
 
 // For local use, we would normally use regular puppeteer, which comes 
 // with Chromium bundled. Then we wouldn’t need @sparticuz/chromium.
