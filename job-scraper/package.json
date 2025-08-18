@@ -1,0 +1,15 @@
+{
+  "name": "job-scraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "puppeteer-core": "^24.16.2"
+  },
+  "devDependencies": {
+    "@sparticuz/chromium": "^138.0.2"
+  }
+}
