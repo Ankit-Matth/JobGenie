@@ -4,7 +4,7 @@
 
 Job Genie PPT - https://drive.google.com/file/d/1f6I7QhgTW8mW-5Zq9ACZ5suUjHLvEFWv/view?usp=sharing
 
-## 🚀 Problem Statement
+## 🚀 Problem Statement 
 
 ### Problem 1:
  The lack of a centralized platform to streamline job searches across multiple websites, such as Naukri.com, Indeed, and Internshala, leads to significant challenges for job seekers. Manually navigating and monitoring these platforms for new job postings is overwhelming, time-consuming, and inefficient. This fragmentation reduces productivity and creates a barrier to staying updated with the latest opportunities
