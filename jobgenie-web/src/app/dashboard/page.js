@@ -10,17 +10,15 @@ function SmallDropdown({ options, value, onChange }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative w-[300px]">
-      {/* Closed box */}
+    <div className="relative w-full md:w-[300px]">
       <div
         className="border rounded-lg px-4 h-11 cursor-pointer bg-white flex justify-between items-center"
         onClick={() => setOpen(!open)}
       >
         <span>{value || "Select..."}</span>
-        <span className="ml-2">▾</span> {/* arrow */}
+        <span className="ml-2">▾</span>
       </div>
 
-      {/* Dropdown list opens above */}
       {open && (
         <div className="absolute bottom-full mb-1 w-full border rounded-lg bg-white max-h-60 overflow-y-auto z-50 shadow-lg">
           {options.map((option) => (
@@ -114,8 +112,7 @@ export default function Dashboard() {
     }
   };
 
-  // Email verification check
-  if (session.user.isEmailVerified) {
+  if (!session.user.isEmailVerified) {
     return (
       <div className="bg-gray-50 p-6">
         <div className="max-w-xl mx-auto my-20 bg-white rounded-2xl shadow-lg p-14 text-center">
@@ -137,19 +134,17 @@ export default function Dashboard() {
   return (
     <div className="bg-gray-100 p-1 mb-2">
       <div className="min-h-[60vh] m-6 bg-white rounded-2xl shadow-lg overflow-visible">
-        {/* Header */}
-        <div className="bg-blue-600 text-white px-8 py-6 flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Welcome back, {session.user.fullName}!</h2>
+        <div className="bg-blue-600 text-white px-4 md:px-8 py-6 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+          <h2 className="text-base md:text-2xl font-bold">Welcome back, {session.user.fullName}!</h2>
           <button
             onClick={() => signOut({ callbackUrl: '/' })}
-            className="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold hover:bg-gray-100"
+            className="bg-white text-blue-600 text-xs md:text-base px-2 py-1 md:px-4 md:py-2 rounded-md md:rounded-full font-semibold hover:bg-gray-100"
           >
             Sign Out
           </button>
         </div>
 
-        {/* Tabs */}
-        <div className="border-b flex bg-gray-50 px-8 pt-4 space-x-4">
+        <div className="border-b flex flex-row bg-gray-50 px-4 md:px-8 pt-4 space-y-2 sm:space-y-0 sm:space-x-4">
           <button
             onClick={() => setActiveTab('preferences')}
             className={`py-2 px-4 font-medium border-b-2 ${
@@ -173,21 +168,20 @@ export default function Dashboard() {
         </div>
 
         <div className="px-8 py-6">
-          {/* Preferences Tab */}
           {activeTab === 'preferences' && (
             <div className="space-y-6">
               <h3 className="text-xl font-semibold text-gray-800">Job Preferences</h3>
               {!editingPref ? (
                 <div className="space-y-4">
-                  <div className="text-red-600">
+                  <div className="text-red-600 text-xs md:text-base">
                     <i>*Support for more preferences coming soon...</i>
                   </div>
 
-                  <div className="flex justify-between bg-gray-100 p-3">
+                  <div className="flex flex-col md:flex-row justify-between bg-gray-100 p-3">
                     <span className="text-gray-600">Preferred Skills</span>
                     <span className="font-semibold">{skills}</span>
                   </div>
-                  <div className="flex justify-between bg-gray-100 p-3">
+                  <div className="flex flex-col md:flex-row justify-between bg-gray-100 p-3">
                     <span className="text-gray-600">Preferred Locations</span>
                     <span className="font-semibold">{locations}</span>
                   </div>
@@ -200,23 +194,21 @@ export default function Dashboard() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="text-red-600">
+                  <div className="text-red-600 text-xs md:text-base">
                     <i>*Must choose skills to receive email alerts.</i>
                   </div>
 
-                  {/* Skills */}
                   <div>
                     <label className="block mb-1 text-sm text-gray-600">Preferred Skills</label>
                     <SmallDropdown options={skillsOptions} value={skills} onChange={setSkills} />
                   </div>
 
-                  {/* Locations */}
                   <div>
                     <label className="block mb-1 text-sm text-gray-600">Preferred Locations</label>
                     <SmallDropdown options={locationOptions} value={locations} onChange={setLocations} />
                   </div>
 
-                  <div className="flex space-x-3">
+                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                     <button
                       onClick={handlePrefSave}
                       className="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700"
@@ -235,19 +227,18 @@ export default function Dashboard() {
             </div>
           )}
 
-          {/* Profile Tab */}
           {activeTab === 'profile' && (
             <div className="space-y-6">
               <h3 className="text-xl font-semibold text-gray-800">Your Info</h3>
               {!editingProfile ? (
                 <div className="space-y-4">
-                  <div className="flex justify-between bg-gray-100 p-3">
+                  <div className="flex flex-col md:flex-row justify-between bg-gray-100 p-3">
                     <span className="text-gray-600">Full Name</span>
                     <span className="font-semibold">{fullName}</span>
                   </div>
-                  <div className="flex justify-between bg-gray-100 p-3">
+                  <div className="flex flex-col md:flex-row justify-between bg-gray-100 p-3">
                     <span className="text-gray-600">Email</span>
-                    <span className="font-semibold">{email}</span>
+                    <span className="font-semibold text-xs md:text-base">{email}</span>
                   </div>
                   <button
                     onClick={() => setEditingProfile(true)}
@@ -274,7 +265,7 @@ export default function Dashboard() {
                       value={email}
                       readOnly={true}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-2 border rounded-lg focus:outline-none"
+                      className="w-full px-4 py-2 text-xs md:text-base border rounded-lg focus:outline-none"
                     />
                   </div>
                   <div className="flex space-x-3">

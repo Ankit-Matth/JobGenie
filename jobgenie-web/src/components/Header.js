@@ -29,32 +29,51 @@ const Header = () => {
 
   return (
     <>
-    {session && !session.user.isEmailVerified && activeLink != "/verify" && (
-      <div className="bg-yellow-100 text-yellow-800 py-2 px-4 flex flex-row items-center justify-center space-x-1 text-sm sm:text-base">
-        <span className="flex items-center">
-          <Image src="/images/email.png" alt="Email icon" width={20} height={10}/> 
-          &nbsp;Please verify your email to get personalized alerts in your inbox. 
+    {session && !session.user.isEmailVerified && activeLink !== "/verify" && (
+      <div className="bg-yellow-100 text-yellow-800 py-2 px-4 flex items-center justify-center text-base text-center md:text-left space-x-2">
+        <span className="flex items-center space-x-2">
+          <Image src="/images/email.png" alt="Email icon" width={20} height={20} />
+          <span className="hidden md:inline">
+            Please verify your email to get personalized alerts in your inbox.
+          </span>
+          <span className="inline md:hidden">
+            Please verify your email.
+          </span>
         </span>
-        <Link href="/verify" onClick={() => handleLinkClick("/verify")} className="underline font-medium hover:text-yellow-900">
+
+        <Link
+          href="/verify"
+          onClick={() => handleLinkClick("/verify")}
+          className="underline text-base font-medium hover:text-yellow-900"
+        >
           Verify Now
         </Link>
+        
       </div>
     )}
 
-    <header className="py-3 shadow-md mb-[2px]">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" onClick={() => handleLinkClick("/")} className="flex items-center space-x-2 ml-4 md:ml-0">
+    <header className="py-3 shadow-md mb-[2px] relative md:static">
+      <div className="container mx-auto flex justify-between items-center px-4 md:px-0">
+        <Link
+          href="/"
+          onClick={() => handleLinkClick("/")}
+          className="flex items-center space-x-2 md:ml-0"
+        >
           <Image
             src="/images/Genie.svg"
-            priority={true}
+            priority
             alt="Logo"
             width={40}
             height={40}
           />
           <span className="text-3xl font-semibold text-gray-600">JOB GENIE</span>
         </Link>
+
         <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="border-black border px-1 rounded">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="border-black border px-1 rounded"
+          >
             <svg
               className="w-6 h-6"
               fill="none"
@@ -71,62 +90,61 @@ const Header = () => {
             </svg>
           </button>
         </div>
+
         <nav
           className={`${
             isOpen ? "block" : "hidden"
-          } md:flex md:items-center w-full md:w-auto absolute top-20 left-0 md:static md:top-0 bg-white`}
+          } md:flex md:items-center w-full md:w-auto absolute top-full left-0 md:static bg-white md:bg-transparent border-2 md:border-0 z-50`}
         >
-          <ul className="flex flex-col border-2 m-1 md:flex-row md:space-x-5 md:border-none md:m-0 text-lg">
-              <>
-                <li className="border-b-2 py-2 md:border-none md:py-0">
-                  <Link
-                    href="/about"
-                    className={`md:p-1 md:pb-[1px] rounded md:hover:border-b-2 md:hover:border-black ${
-                      activeLink === "/about" ? "font-medium text-gray-950" : "font-light text-gray-600"
-                    } w-full justify-center flex md:flex-none md:inline`}
-                    onClick={() => handleLinkClick("/about")}
-                  >
-                    About
-                  </Link>
-                </li>
-                <li className="py-2 md:py-0">
-                  <Link
-                    href="/contact"
-                    className={`md:p-1 md:pb-[1px] rounded md:hover:border-b-2 md:hover:border-black ${
-                      activeLink === "/contact" ? "font-medium text-gray-950" : "font-light text-gray-600"
-                    } w-full justify-center flex md:flex-none md:inline`}
-                    onClick={() => handleLinkClick("/contact")}
-                  >
-                    Contact
-                  </Link>
-                </li>
-                <li className="py-0 md:py-0">
-                    {isLoggedIn ? (
-                      <Link
-                        href="/dashboard"
-                        className={`justify-center flex md:flex-none md:inline`}
-                        onClick={() => handleLinkClick("/dashboard")}
-                      >
-                        <Image
-                          src="/images/profile-pic.png"
-                          alt="profile-pic"
-                          width={31}
-                          height={30}
-                        />
-                      </Link>
-                    ) : (
-                      <Link
-                        href="/login"
-                        className={`md:p-1 md:pb-[1px] rounded md:hover:border-b-2 md:hover:border-black ${
-                          activeLink === "/login" ? "font-medium text-gray-950" : "font-light text-gray-600"
-                        } w-full justify-center flex md:flex-none md:inline`}
-                        onClick={() => handleLinkClick("/login")}
-                      >
-                        Get Started
-                      </Link>
-                    )}
-                </li>
-              </>
+          <ul className="flex flex-col md:flex-row md:space-x-5 text-lg">
+            <li className="border-b-2 md:border-none py-2 md:py-0">
+              <Link
+                href="/about"
+                className={`md:p-1 md:pb-[1px] rounded md:hover:border-b-2 md:hover:border-black w-full justify-center flex md:flex-none md:inline ${
+                  activeLink === "/about" ? "font-medium text-gray-950" : "font-light text-gray-600"
+                }`}
+                onClick={() => handleLinkClick("/about")}
+              >
+                About
+              </Link>
+            </li>
+            <li className="border-b-2 md:border-none py-2 md:py-0">
+              <Link
+                href="/contact"
+                className={`md:p-1 md:pb-[1px] rounded md:hover:border-b-2 md:hover:border-black w-full justify-center flex md:flex-none md:inline ${
+                  activeLink === "/contact" ? "font-medium text-gray-950" : "font-light text-gray-600"
+                }`}
+                onClick={() => handleLinkClick("/contact")}
+              >
+                Contact
+              </Link>
+            </li>
+            <li className="border-b-2 md:border-none py-2 md:py-0">
+              {isLoggedIn ? (
+                <Link
+                  href="/dashboard"
+                  className="justify-center flex md:flex-none md:inline"
+                  onClick={() => handleLinkClick("/dashboard")}
+                >
+                  <Image
+                    src="/images/profile-pic.png"
+                    alt="profile-pic"
+                    width={31}
+                    height={30}
+                  />
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className={`md:p-1 md:pb-[1px] rounded md:hover:border-b-2 md:hover:border-black w-full justify-center flex md:flex-none md:inline ${
+                    activeLink === "/login" ? "font-medium text-gray-950" : "font-light text-gray-600"
+                  }`}
+                  onClick={() => handleLinkClick("/login")}
+                >
+                  Get Started
+                </Link>
+              )}
+            </li>
           </ul>
         </nav>
       </div>

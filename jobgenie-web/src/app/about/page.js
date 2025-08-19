@@ -20,14 +20,14 @@ const AboutUsPage = () => {
         <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-12 py-12 px-10">
           <div className="flex flex-col md:flex-row items-center md:space-x-8">
             <div className="md:w-2/3">
-              <h2 className="text-4xl font-bold text-indigo-700 mb-4">
+              <h2 className="text-2xl md:text-4xl font-bold text-indigo-700 mb-4">
                 Meet <span className="text-yellow-500">Job Genie</span>
               </h2>
-              <p className="text-gray-700 mb-4 pr-4 text-lg text-justify">
+              <p className="text-gray-700 mb-4 pr-4 text-sm md:text-lg text-justify">
               Tired of bouncing between multiple job sites? Job Genie is your magical one-stop platform for smarter job hunting! Discover listings from Shine, Naukri, and Internshala — all in one place. Say goodbye to tab toggling or juggling multiple platforms and let Job Genie work its magic on your career!
               </p>
-              <h3 className="text-4xl font-bold text-indigo-700 mb-4">Our Mission</h3>
-              <p className="text-gray-700 mb-4 pr-4 text-lg text-justify">
+              <h3 className="text-2xl md:text-4xl font-bold text-indigo-700 mb-4">Our Mission</h3>
+              <p className="text-gray-700 mb-4 pr-4 text-sm md:text-lg text-justify">
                 At <strong>Job Genie</strong>, we aim to make job searching fast, efficient, and personalized. Our platform consolidates listings, giving you instant access to opportunities from top sources. Whether you’re a seasoned professional or just starting, our mission is to empower you to find your dream role with ease.
               </p>
             </div>
@@ -89,11 +89,11 @@ const AboutUsPage = () => {
         </div>
 
         <div className="bg-indigo-700 shadow-lg rounded-lg overflow-hidden pt-12 pb-14 px-6 text-center text-white">
-          <h3 className="text-3xl font-bold mb-4">Ready to Find Your Dream Job?</h3>
-          <p className="mb-8 text-base">
+          <h3 className="text-lg md:text-3xl font-bold mb-4">Ready to Find Your Dream Job?</h3>
+          <p className="mb-8 text-xs md:text-base">
             Join <strong>Job Genie</strong> today and start receiving opportunities tailored just for you.
           </p>
-          <Link href={isLoggedIn ? '/dashboard' : '/login'} className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold py-2 px-4 rounded-lg transition duration-200 mt-4">
+          <Link href={isLoggedIn ? '/dashboard' : '/login'} className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold text-sm md:text-base py-2 px-4 rounded-lg transition duration-200 mt-4">
             {isLoggedIn ? 'Set Preferences for Job Alerts' : 'Create Your Free Account'}
           </Link>
         </div>

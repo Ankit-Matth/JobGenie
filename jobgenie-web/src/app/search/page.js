@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 const platforms = ["All", "Shine", "Naukri", "Internshala"];
 
 const SearchPage = () => {
-  const hasFetched = useRef(false);
   const [selectedPlatform, setSelectedPlatform] = useState("All");
   
   const [scrapedJobs, setScrapedJobs] = useState([]);
@@ -68,7 +67,7 @@ useEffect(() => {
       }
     })
     .catch(() => alert('Error occurred while scraping data'));
-}, [query]); // 👈 run again whenever query from URL changes
+}, [query]); // run again whenever query from URL changes
 
 
   // Simulate loading with multiple steps
@@ -114,7 +113,6 @@ useEffect(() => {
   return () => cancelAnimationFrame(rafId);
 }, [loadingStep]);
 
-  // Derived state: Filtered jobs
  const filteredJobs = useMemo(() => {
   return scrapedJobs.filter((job) => {
     const matchesPlatform =
@@ -144,36 +142,33 @@ const handleSearch = (e) => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <div className="bg-white shadow-md pb-8 pt-10">
+      <div className="bg-white shadow-md py-6 md:pb-8 md:pt-10">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-          <h1 className="text-4xl font-semibold text-gray-800">Find the Job You Deserve</h1>
-          <div className="relative w-full md:w-2/5 mt-4 md:mt-0">
+          <h1 className="text-2xl md:text-4xl font-semibold text-gray-800 mb-2 md:mb-0">Find the Job You Deserve</h1>
+          <div className="relative w-[90%] md:w-2/5 mt-6 md:mt-0">
             <input
               type="text"
               onChange={(e)=>{setSearchQuery(e.target.value)}}
               value={searchQuery}
               disabled={loading}
-              className={`w-full p-2 rounded-md focus:outline-blue-600 ring-2 ${searchError ? 'ring-red-700 placeholder-red-600' : 'ring-blue-300 placeholder-gray-400'}`}
+              className={`w-full p-2 text-xs md:text-lg rounded-md focus:outline-blue-600 ring-2 ${searchError ? 'ring-red-700 placeholder-red-600' : 'ring-blue-300 placeholder-gray-400'}`}
               placeholder={searchError ? "Please type something in the search box..." : "Search for job roles, companies, or skills..."}
             />
-            <button onClick={handleSearch} disabled={loading} className={`absolute right-0 top-0 h-full px-3 ${searchError ? 'bg-red-600' : 'bg-blue-600'} text-white rounded-md hover:bg-blue-700 transition duration-300`}>
+            <button onClick={handleSearch} disabled={loading} className={`absolute right-0 top-0 h-full text-xs px-3 ${searchError ? 'bg-red-600' : 'bg-blue-600'} text-white rounded-md hover:bg-blue-700 transition duration-300`}>
               {searchError ? 'Error' : 'Search'}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Filters and Tabs */}
       <div className="bg-gray-50 shadow-md py-6">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="mx-auto px-4 md:px-12">
           <div className="flex items-center justify-between">
-            {/* Tabs */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-6">
               {platforms.map((platform) => (
                 <button
                   key={platform}
-                  className={`px-4 py-2 rounded-md ${
+                  className={`px-2 py-1 text-xs md:text-base  md:px-4 md:py-2 rounded-md ${
                     selectedPlatform === platform
                       ? "bg-blue-600 text-white"
                       : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -189,14 +184,12 @@ const handleSearch = (e) => {
         </div>
       </div>
 
-      {/* Job Listings and Pagination */}
       <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Loading Phase */}
         {loading ? (
         <div className="flex flex-col justify-center items-center col-span-3 mt-5">
         {steps.slice(0, loadingStep + 1).map((step, index) => (
-          <div key={index} className="w-1/2 my-2">
-            <p className={`text-xl ${index === loadingStep ? "text-blue-600" : "text-gray-900"}`}>
+          <div key={index} className="w-2/3 md:w-1/2 my-2">
+            <p className={`text-sm md:text-xl ${index === loadingStep ? "text-blue-600" : "text-gray-900"}`}>
               {step}
             </p>
             <div className="w-full bg-gray-300 rounded-md h-4 mt-1">
@@ -218,25 +211,24 @@ const handleSearch = (e) => {
           </div> 
           ) : (
           <>
-            {/* Job Listings */}
             {filteredJobs.slice(prev, next).map((job) => (
             <div
               key={job.id}
-              className="bg-white shadow-md rounded-md p-6 hover:shadow-lg transition flex flex-col justify-between"
+              className="bg-white shadow-md rounded-md p-4 md:p-6 hover:shadow-lg flex flex-col justify-between break-words"
               style={{ pointerEvents: (loading || noResultFound) ? "none" : "auto" }} // Disable pointer events during loading
             >
-              <div>
-                              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold text-gray-800">
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <h2 className="text-sm md:text-lg font-semibold text-gray-800 break-words">
                   {job.title}
                 </h2>
-                <span className="text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded-md">
+                <span className="text-xs md:text-sm bg-blue-100 text-blue-600 px-2 py-1 rounded-md">
                   {job.platform}
                 </span>
               </div>
-              <p className="text-gray-600">{job.company}</p>
-              <p className="text-gray-500">{job.location}</p>
-              <p className="text-gray-800 font-bold">{job.experience}</p>
+              <p className="text-gray-600 text-sm">{job.company}</p>
+              <p className="text-gray-500 text-sm">{job.location}</p>
+              <p className="text-gray-800 font-bold text-sm">{job.experience}</p>
               
               <div className="my-2">
                 <span
@@ -264,41 +256,42 @@ const handleSearch = (e) => {
               </div>
             </div>
             ))}
-
-            {/* Pagination */}
-            <div
-              className="col-span-3 flex justify-center py-6"
-              style={{ pointerEvents: (loading || noResultFound) ? "none" : "auto" }} // Disable pointer events during loading
-            >
-              <button
-                className={`px-2 py-1 ${prev == 0 ? 'hover:cursor-not-allowed' : ''} text-sm bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400`}
-                disabled={loading || noResultFound} // Disable button during loading
-                onClick={()=>{
-                  if (prev !== 0) {
-                    setPrev((val)=>val-6)
-                    setNext((val)=>val-6)
-                  }
-                }}
-              >
-                Previous
-              </button>
-              <span className="mx-4">Page {Math.floor(prev / 6) + 1} of {Math.ceil(filteredJobs.length/6)}</span>
-              <button
-                className={`px-2 py-1 ${next == filteredJobs.length ? 'hover:cursor-not-allowed' : ''} text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700`}
-                disabled={loading || noResultFound} // Disable button during loading
-                onClick={()=>{
-                  if (next !== filteredJobs.length) {
-                    setNext((val)=>val+6)
-                    setPrev((val)=>val+6)
-                  }
-                }}
-              >
-                Next
-              </button>
-            </div>
           </>
         ))}
       </div>
+
+      {!loading && !noResultFound &&
+        <div
+          className="col-span-3 flex justify-center pt-4 md:pt-8 pb-10 md:pb-16"
+          style={{ pointerEvents: (loading || noResultFound) ? "none" : "auto" }} // Disable pointer events during loading
+        >
+          <button
+            className={`px-2 py-1 ${prev == 0 ? 'hover:cursor-not-allowed' : ''} text-sm bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400`}
+            disabled={loading || noResultFound} // Disable button during loading
+            onClick={()=>{
+              if (prev !== 0) {
+                setPrev((val)=>val-6)
+                setNext((val)=>val-6)
+              }
+            }}
+          >
+            Previous
+          </button>
+          <span className="mx-4">Page {Math.floor(prev / 6) + 1} of {Math.ceil(filteredJobs.length/6)}</span>
+          <button
+            className={`px-2 py-1 ${next == filteredJobs.length ? 'hover:cursor-not-allowed' : ''} text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700`}
+            disabled={loading || noResultFound} // Disable button during loading
+            onClick={()=>{
+              if (next !== filteredJobs.length) {
+                setNext((val)=>val+6)
+                setPrev((val)=>val+6)
+              }
+            }}
+          >
+            Next
+          </button>
+        </div>
+      } 
     </div>
   );
 };

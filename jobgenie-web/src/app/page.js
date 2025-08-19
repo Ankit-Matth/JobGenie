@@ -39,11 +39,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center bg-white p-6">
-      <div className="min-h-[60vh] flex flex-col items-center justify-center">
-          <h1 className="text-5xl font-extrabold text-gray-800 text-center mb-4">
+      <div className="min-h-[50vh] md:min-h-[60vh] flex flex-col items-center justify-center">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 text-center mb-4">
             Discover Your Dream Job Effortlessly!
           </h1>
-          <p className="mt-2 text-2xl text-gray-600 max-w-2xl text-center my-3">
+          <p className="mt-2 text-lg md:text-2xl text-gray-600 max-w-2xl text-center my-3">
             Streamline your job search across top platforms like Shine, Naukri, and Internshala — all from one place.
           </p>
 
@@ -52,10 +52,10 @@ export default function Home() {
               type="text"
               onChange={(e)=>{setSearchQuery(e.target.value)}}
               value={searchQuery}
-              className={`w-full p-4 rounded-md focus:outline-blue-600 ring-2 ${searchError ? 'ring-red-700 placeholder-red-600' : 'ring-blue-300 placeholder-gray-400'}`}
+              className={`w-full p-4 text-xs md:text-lg rounded-md focus:outline-blue-600 ring-2 ${searchError ? 'ring-red-700 placeholder-red-600' : 'ring-blue-300 placeholder-gray-400'}`}
               placeholder={searchError ? "Please type something in the search box..." : "Search for job roles, companies, or skills..."}
             />
-            <button onClick={handleSearch} className={`absolute right-0 top-0 h-full px-4 text-white rounded-md transition duration-300 ${searchError ? 'bg-red-600' : 'bg-blue-600 hover:bg-blue-700'}`}>
+            <button onClick={handleSearch} className={`absolute right-0 top-0 text-xs md:text-lg h-full px-4 text-white rounded-md transition duration-300 ${searchError ? 'bg-red-600' : 'bg-blue-600 hover:bg-blue-700'}`}>
               {searchError ? 'Error' : 'Search'}
             </button>
           </div>
@@ -106,10 +106,10 @@ export default function Home() {
       </div>
 
       <div className="text-center my-12">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+        <h2 className="text-xl md:text-3xl font-bold text-gray-800 mb-2">
           The Job You Want, Delivered to Your Inbox
         </h2>
-        <p className="text-lg text-gray-600 mb-4">
+        <p className="text-base md:text-lg text-gray-600 mb-4">
           Build the Career You Deserve – Get Job Alerts on Your Terms
         </p>
         <button

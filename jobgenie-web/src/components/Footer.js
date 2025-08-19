@@ -22,7 +22,6 @@ const Footer = () => {
     setTimeout(() => setShake(false), 500);
   };
 
-  // Content for Terms of Service and Privacy Policy
   const content = {
     terms: (
       <>
@@ -74,12 +73,12 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="bg-gray-900 text-white py-4">
-        <div className="flex justify-between items-center px-4">
-          <p className="text-sm">
+      <footer className="bg-gray-900 text-white py-6">
+        <div className="px-4 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+          <p className="text-sm text-center md:text-left">
             &copy; {new Date().getFullYear()} Job Genie – All Rights Reserved.
           </p>
-          <div className="flex space-x-4">
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 text-center">
             <button
               onClick={() => openModal('privacy')}
               className="text-gray-400 hover:text-white transition duration-300 text-sm"
@@ -92,16 +91,20 @@ const Footer = () => {
             >
               Terms of Service
             </button>
-            <Link href="/contact" className="text-gray-400 hover:text-white transition duration-300 text-sm">Contact Us</Link>
+            <Link
+              href="/contact"
+              className="text-gray-400 hover:text-white transition duration-300 text-sm"
+            >
+              Contact Us
+            </Link>
           </div>
         </div>
       </footer>
 
-      {/* Modal Popup */}
       {isModalOpen && (
         <div
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-          onClick={handleOverlayClick} // Trigger shake on overlay click
+          onClick={handleOverlayClick}
         >
           <div
             className={`bg-white rounded-lg w-11/12 md:w-2/3 lg:w-1/2 p-6 relative ${

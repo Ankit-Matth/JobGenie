@@ -44,9 +44,7 @@ export default function VerifyPage() {
       setStatus('');
       const res = await axios.get(`/api/verify?token=${token}`);
       if (res.data.success) {
-        // Sign in the user automatically after verification to upadte session
         await signIn('credentials', { user: res.data.user, redirect: true, callbackUrl: '/' });
-
         setStatus('✅ Email verified successfully!');
         setIsVerified(true);
       } else {
@@ -61,54 +59,51 @@ export default function VerifyPage() {
   };
 
   return (
-    <div className="min-h-[70vh] bg-gradient-to-r from-blue-100 to-purple-100 flex flex-col items-center justify-center p-12">
-      <div className="w-full bg-white p-12 rounded-xl shadow-xl border border-gray-100">
-        <h2 className="text-4xl font-semibold text-gray-800 mb-8">Email Verification</h2>
+    <div className="min-h-[70vh] bg-gradient-to-r from-blue-100 to-purple-100 flex flex-col items-center justify-center px-4 py-8 sm:py-12">
+      <div className="w-full max-w-lg bg-white p-6 sm:p-10 rounded-xl shadow-xl border border-gray-100">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-gray-800 mb-6 sm:mb-8 text-left">Email Verification</h2>
 
         {session?.user && (
           <>
-            <div className="text-2xl mb-4">
+            <div className="text-lg sm:text-xl mb-4 text-left">
               <h3 className="font-semibold text-gray-700">Welcome, {session.user.fullName}!</h3>
-              <p className="text-gray-600 mt-2">Your email: {session.user.email}</p>
+              <p className="text-gray-600 mt-1 sm:mt-2">Your email: {session.user.email}</p>
             </div>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 mb-6 text-left">
               To receive personalized job alerts, recommendations, and updates from Job Genie, please verify your email address.
             </p>
           </>
         )}
 
         {isLoading && (
-          <p className="text-blue-600 mb-4 font-medium">⏳ Please wait...</p>
+          <p className="text-blue-600 mb-4 font-medium text-center">⏳ Please wait...</p>
         )}
 
-        {/* Show "Send Verification Email" if no token and not sent */}
         {!token && !emailSent && !isLoading && (
           <button
             onClick={sendEmail}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg transition-all mb-6 shadow-md"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold w-full px-4 py-3 rounded-lg transition-all mb-6 shadow-md"
           >
             Send Verification Email
           </button>
         )}
 
-        {/* Show "Verify Now" only when token exists and not verified */}
         {token && !isVerified && !isExpired && !isLoading && !status && (
           <button
             onClick={verifyEmail}
-            className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg transition-all mb-6 shadow-md"
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold w-full px-4 py-3 rounded-lg transition-all mb-6 shadow-md"
           >
             Verify Now
           </button>
         )}
 
-        {/* Expired Link + Resend Option */}
         {isExpired && (
-          <div className="bg-red-100 text-red-700 border border-red-300 p-6 rounded-md mb-6 shadow-md">
+          <div className="bg-red-100 text-red-700 border border-red-300 p-4 sm:p-6 rounded-md mb-6 shadow-md text-center">
             <p className="font-semibold">❌ This verification link has expired.</p>
             {!emailSent && (
               <button
                 onClick={sendEmail}
-                className="bg-red-600 hover:bg-red-700 w-full md:w-1/3 text-white font-semibold px-6 py-3 rounded-lg transition-all mt-4"
+                className="bg-red-600 hover:bg-red-700 w-full sm:w-1/2 mx-auto text-white font-semibold px-4 py-2 rounded-lg transition-all mt-4"
               >
                 Resend Verification Email
               </button>
@@ -116,10 +111,9 @@ export default function VerifyPage() {
           </div>
         )}
 
-        {/* Status Message */}
         {status && (
           <p
-            className={`mt-3 text-lg ${
+            className={`mt-3 text-base sm:text-lg text-center ${
               status.startsWith('✅') ? 'text-green-600' : status.startsWith('❌') ? 'text-red-600' : 'text-gray-700'
             }`}
           >
