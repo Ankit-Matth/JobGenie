@@ -1,16 +1,35 @@
-# 💼 Job Genie – Unified Job Search Platform
+# 💼 Job Genie – BTech Major Project
 
-**Job Genie** is a centralized job search platform built to streamline and automate the job discovery process across multiple websites like **Naukri.com**, **Indeed**, and **Internshala**. It is a final year BTech major project aimed at solving the real-world inefficiencies job seekers face by providing an all-in-one solution.
+**Job Genie** is a centralized job search platform built to streamline and automate the job discovery process across multiple websites like **Shine.com**, **Naukri.com**, and **Internshala**. This project was developed by our team as our final year BTech major project to address real-world inefficiencies faced by job seekers. Job Genie offers a unified, user-friendly solution that saves time, improves search accuracy, and enhances the overall job application experience.
 
 Job Genie PPT - https://drive.google.com/file/d/1f6I7QhgTW8mW-5Zq9ACZ5suUjHLvEFWv/view?usp=sharing
+
+---
+
+## 👥 Team Roles & Responsibilities
+
+### 👤 Mohit Kumar
+- Handled authentication: sign-up, login, and email verification
+- Developed backend APIs for users and contact management
+- Prepared documentation: synopsis, PPT, etc.
+
+### 👤 Vishal Singh
+- Designed UI/UX: logo, images, and color schemes
+- Developed key pages: signup, signin, and contact us
+- Managed documentation: project report, weekly workbook
+
+### 👤 Ankit Matth (Project Lead)
+- All remaining frontend development
+- Implemented web scraping using Puppeteer.js
+- Project planning, coordination, and deployment
 
 ## 🚀 Problem Statement 
 
 ### Problem 1:
- The lack of a centralized platform to streamline job searches across multiple websites, such as Naukri.com, Indeed, and Internshala, leads to significant challenges for job seekers. Manually navigating and monitoring these platforms for new job postings is overwhelming, time-consuming, and inefficient. This fragmentation reduces productivity and creates a barrier to staying updated with the latest opportunities
+ Job seekers face inefficiency and fragmentation due to the lack of a centralized platform, having to manually search and track jobs across multiple sites like Naukri.com, Shine.com, and Internshala. This is time-consuming and reduces productivity.
 
 ### Problem 2:
- Job seekers struggle with setting up custom filters or receiving timely notifications for job postings tailored to their preferences. Existing solutions require users to repeatedly visit platforms, apply search criteria manually, and track postings themselves. This repetitive process results in missed opportunities, frustration, and inefficient job application management.
+ Existing platforms don’t provide easy custom filters or timely notifications, forcing users to repeatedly check for relevant job postings, often leading to missed opportunities and frustration.
 
 ---
 
@@ -20,23 +39,8 @@ Job Genie PPT - https://drive.google.com/file/d/1f6I7QhgTW8mW-5Zq9ACZ5suUjHLvEFW
 
 - 🔍 **Aggregated Job Listings**: Web scraping modules fetch jobs from Naukri.com, Indeed, and Internshala.
 - ⚙️ **Custom Filters**: Users can filter by role, company, location, skills, and more.
-- 📧 **Instant Notifications**: Email alerts for jobs matching the user’s criteria.
+- 📧 **Instant Notifications**: Email alerts every 24 hours for jobs matching the user’s criteria.
 - 📊 **Unified Dashboard**: View, track, and manage all job applications in one place.
-
----
-
-## 👥 Team Roles & Responsibilities
-
-### 👤 Mohit Kumar
-- Authentication (sign-up, login, password reset)
-- Backend: User APIs and notification system
-- Documentation: Project report, PPT, etc.
-
-### 👤 Ankit (Project Lead)
-- UI/UX Design and complete frontend development
-- Web scraping and data integration using Puppeteer.js
-- Backend: Data ingestion and integration APIs
-- Project planning, coordination, and deployment
 
 ---
 
@@ -44,7 +48,7 @@ Job Genie PPT - https://drive.google.com/file/d/1f6I7QhgTW8mW-5Zq9ACZ5suUjHLvEFW
 
 | Technology      | Purpose                                               |
 |-----------------|-------------------------------------------------------|
-| **Next.js**     | Full-stack framework for frontend & SSR               |
+| **Next.js**     | Full-stack framework for dynamic web applications     |
 | **Tailwind CSS**| Rapid UI development with responsive utility classes  |
-| **Express.js**  | Backend API and server infrastructure                 |
-| **Puppeteer.js**| Web scraping from external job portals                |
+| **Express.js**  | Backend API and server infrastructure for scraping    |
+| **Puppeteer.js**| For Web scraping from external job portals            |
