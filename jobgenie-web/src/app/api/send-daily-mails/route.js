@@ -41,6 +41,19 @@ export async function GET(req) {
         if (contentType && contentType.includes('application/json')) {
           const data = await response.json();
 
+          const jobsHtml = data.scrapedJobs
+          .map(job => `
+            <div style="background: #fff; padding: 10px; margin-bottom: 10px; border-radius: 6px;">
+              <h3 style="margin: 0; font-size: 16px; color: #111;"><strong>${job.title}</strong></h3>
+              <p style="margin: 2px 0; font-size: 14px; color: #555;">${job.company}</p>
+              <p style="margin: 2px 0; font-size: 14px; color: #555;">${job.location}</p>
+              <p style="margin: 2px 0; font-size: 14px; color: #555;">${job.experience}</p>
+              <p style="margin: 2px 0; font-size: 12px; color: #16a34a;">Posted: ${job.posted}</p>
+              <a href="${job.src}" target="_blank" style="display:inline-block; margin-top:5px; padding:5px 10px; background:#f59e0b; color:#fff; text-decoration:none; border-radius:4px;">View Details</a>
+            </div>
+          `).join('');
+
+
           const html = `
           <div style="max-width: 700px; margin: auto; font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f9fafb; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
             <div style="text-align: center; margin-bottom: 30px;">
@@ -53,7 +66,7 @@ export async function GET(req) {
               Hope you're having a great day! Here are opportunities according to your preferences:
             </p>
 
-            <div>${data.scrapedJobs}</div>
+            <div>${jobsHtml}</div>
 
             <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;" />
 
