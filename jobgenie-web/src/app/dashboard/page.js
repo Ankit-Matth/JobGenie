@@ -120,9 +120,15 @@ export default function Dashboard() {
           <p className="text-gray-700 text-lg mb-8">
             Please verify your email first to access the dashboard.
           </p>
+          <button
+            onClick={() => signOut({ callbackUrl: '/' })}
+            className="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700"
+          >
+            Sign Out
+          </button>
           <Link
             href={'/verify'}
-            className="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700"
+            className="bg-blue-600 text-white ml-3 px-5 py-2 rounded-full font-semibold hover:bg-blue-700"
           >
             Verify Now
           </Link>

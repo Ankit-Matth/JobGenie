@@ -1,11 +1,8 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/utils/dbConfig';
+import { sendEmail } from '@/utils/mailer';
 import UserModel from "@/models/Users";
 import crypto from 'crypto';
-import { Resend } from 'resend';
-import { signIn } from 'next-auth/react';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request) {
   await connectDB();
@@ -25,12 +22,7 @@ export async function POST(request) {
 
   const verifyUrl = `${process.env.NEXTAUTH_URL}/verify?token=${token}`;
 
-  try {
-    await resend.emails.send({
-      from: 'Job Genie <onboarding@resend.dev>',
-      to: email,
-      subject: 'Verify Your Email',
-      html: `
+  const html = `
       <div style="max-width: 700px; margin: auto; font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f9fafb; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
         <div style="text-align: center; margin-bottom: 30px;">
           <img src="https://the-job-genie.vercel.app/images/logo.png" alt="JobGenie Logo" style="width: 400px" />
@@ -62,14 +54,11 @@ export async function POST(request) {
           &copy; ${new Date().getFullYear()} Job Genie. All rights reserved.
         </p>
       </div>
-      `,
-    });
+      `
+  const result = await sendEmail({ to: email, subject: "Verify Your Email", html });
 
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ success: false, message: 'Email failed' }, { status: 500 });
-  }
+  if (result.success) return NextResponse.json({ success: true });
+  else return NextResponse.json({ success: false, message: 'Email failed', error: result.error }, { status: 500 });
 }
 
 export async function GET(request) {
