@@ -2,9 +2,9 @@
 
 **Job Genie** is a centralized job search platform built to streamline and automate the job discovery process across multiple websites like **Shine.com**, **Naukri.com**, and **Internshala**. This project was developed by our team as our final year BTech major project to address real-world inefficiencies faced by job seekers. Job Genie offers a unified, user-friendly solution that saves time, improves search accuracy, and enhances the overall job application experience.
 
-Job Genie PPT - https://drive.google.com/file/d/1f6I7QhgTW8mW-5Zq9ACZ5suUjHLvEFWv/view?usp=sharing
+Screen Recording :
 
----
+https://github.com/user-attachments/assets/4e57bc26-0ef0-4d8a-a9b1-66fadff3ffb8
 
 ## 👥 Team Roles & Responsibilities
 
@@ -31,8 +31,6 @@ Job Genie PPT - https://drive.google.com/file/d/1f6I7QhgTW8mW-5Zq9ACZ5suUjHLvEFW
 ### Problem 2:
  Existing platforms don’t provide easy custom filters or timely notifications, forcing users to repeatedly check for relevant job postings, often leading to missed opportunities and frustration.
 
----
-
 ## ✅ Solution: Job Genie
 
 **Job Genie** revolutionizes the job search process with:
@@ -41,8 +39,6 @@ Job Genie PPT - https://drive.google.com/file/d/1f6I7QhgTW8mW-5Zq9ACZ5suUjHLvEFW
 - ⚙️ **Custom Filters**: Users can filter by role, company, location, skills, and more.
 - 📧 **Instant Notifications**: Email alerts every 24 hours for jobs matching the user’s criteria.
 - 📊 **Unified Dashboard**: View, track, and manage all job applications in one place.
-
----
 
 ## 🛠️ Tech Stack
 
